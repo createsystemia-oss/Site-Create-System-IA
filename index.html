@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Create System IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+[hidden]{display:none!important}
+body{margin:0}
+img{max-width:100%}
+
+/* Layout: papel quadriculado de projeto como fundo; logotipo e título no topo; carta de apresentação numa coluna única centralizada. */
+:root {
+  --bg: #f2f6fb;
+  --surface: #ffffff;
+  --ink: #0b1f3a;
+  --muted: #4d6079;
+  --line: #d3deec;
+  --blue: #1556e0;
+  --blue-soft: #e2ebff;
+  --on-blue: #ffffff;
+  --green: #12a874;
+  --green-ink: #07704d;
+  --green-soft: #d9f4e8;
+  --grid: rgba(21, 86, 224, 0.07);
+  --shadow: 0 1px 2px rgba(11, 31, 58, 0.06), 0 12px 32px -12px rgba(11, 31, 58, 0.18);
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #07111e;
+    --surface: #0e1c2f;
+    --ink: #e7effb;
+    --muted: #95a8c2;
+    --line: #1f3350;
+    --blue: #6b97ff;
+    --blue-soft: #14284d;
+    --on-blue: #07111e;
+    --green: #34d399;
+    --green-ink: #4fe0a8;
+    --green-soft: #0f3a2e;
+    --grid: rgba(107, 151, 255, 0.08);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #07111e;
+  --surface: #0e1c2f;
+  --ink: #e7effb;
+  --muted: #95a8c2;
+  --line: #1f3350;
+  --blue: #6b97ff;
+  --blue-soft: #14284d;
+  --on-blue: #07111e;
+  --green: #34d399;
+  --green-ink: #4fe0a8;
+  --green-soft: #0f3a2e;
+  --grid: rgba(107, 151, 255, 0.08);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  padding-inline: 20px;
+  padding-block: 0 110px;
+}
+.wrap { max-width: 760px; margin-inline: auto; }
+h1, h2, p { margin: 0; }
+h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.02em; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+/* Topo */
+.top { display: flex; align-items: center; gap: 14px; padding-block: 28px 8px; }
+.top svg { display: block; flex: none; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 4.5vw, 2.2rem); letter-spacing: -0.03em; line-height: 1; }
+
+/* Menu */
+.top { position: relative; }
+.menu-btn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.menu-btn:hover { border-color: var(--blue); color: var(--blue); }
+.menu-btn[aria-expanded="true"] { border-color: var(--blue); background: var(--blue-soft); color: var(--blue); }
+.menu-btn svg { display: block; fill: currentColor; }
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  min-width: 220px;
+  max-width: calc(100vw - 40px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+}
+.menu a {
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu a::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex: none; }
+.menu a:nth-child(even)::before { background: var(--green); }
+.menu a:hover, .menu a:focus-visible { background: var(--blue-soft); }
+
+/* Carrossel */
+.slider {
+  position: relative;
+  margin-top: 24px;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: #0a0a24;
+}
+.slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
+.slide.on { opacity: 1; }
+.slide::before, .slide::after { content: ""; position: absolute; inset: 0; background-image: var(--img); background-position: center; background-repeat: no-repeat; }
+.slide::before { background-size: cover; filter: blur(22px) brightness(0.7); transform: scale(1.12); }
+.slide::after { background-size: contain; }
+.dots { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 8px; }
+.dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+}
+.dot[aria-current="true"] { background: #ffffff; }
+.slider + .letter { margin-top: 20px; }
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+}
+
+/* Carta */
+.letter {
+  margin-top: 32px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 6px solid var(--blue);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.letter h1 { font-size: clamp(1.7rem, 4.4vw, 2.5rem); font-weight: 800; line-height: 1.1; }
+.sub { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; color: var(--green-ink); font-weight: 500; }
+.rule { height: 3px; width: 72px; border-radius: 2px; background: linear-gradient(90deg, var(--blue), var(--green)); border: 0; margin: 0; }
+.letter p.body { color: var(--ink); max-width: 62ch; }
+.badge {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--green-ink);
+  background: var(--green-soft);
+  border: 1.5px solid var(--green);
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+/* Contato */
+.contact { display: flex; flex-direction: column; gap: 12px; padding-top: 6px; border-top: 1px dashed var(--line); padding-top: 22px; }
+.contact-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.email { font-family: var(--font-mono); font-size: 15px; font-weight: 500; color: var(--blue); overflow-wrap: anywhere; user-select: all; }
+.btn {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--blue);
+  background: var(--blue);
+  color: var(--on-blue);
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.08); }
+.wa-label { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; color: var(--green-ink); font-weight: 500; }
+.wa-btn { text-decoration: none; display: inline-block; background: var(--green-ink); border-color: var(--green-ink); color: var(--on-blue); }
+.wa-float {
+  position: fixed;
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px 13px 14px;
+  border-radius: 999px;
+  background: var(--green-ink);
+  color: var(--on-blue);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 20px -4px rgba(7, 112, 77, 0.55), 0 2px 6px rgba(11, 31, 58, 0.25);
+}
+.wa-float:hover { filter: brightness(1.1); }
+.wa-float svg { display: block; flex: none; }
+@media (max-width: 480px) {
+  .wa-float { padding: 14px; }
+  .wa-float span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+.msg { font-size: 13px; color: var(--green-ink); font-weight: 500; }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top" id="inicio">
+    <button class="menu-btn" type="button" id="menuBtn" aria-label="Abrir menu" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="10" cy="3.5" r="2"></circle>
+        <circle cx="10" cy="10" r="2"></circle>
+        <circle cx="10" cy="16.5" r="2"></circle>
+      </svg>
+    </button>
+    <nav class="menu" id="menuList" aria-label="Menu" hidden>
+      <a href="#inicio">Início</a>
+      <a href="#apresentacao">Apresentação</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <svg width="44" height="44" viewBox="0 0 30 30" aria-hidden="true">
+      <rect x="2" y="2" width="17" height="17" rx="4" style="fill: var(--blue)"></rect>
+      <rect x="11" y="11" width="17" height="17" rx="4" style="fill: var(--green); opacity: 0.92"></rect>
+    </svg>
+    <span class="brand">Create System IA</span>
+  </header>
+
+  <main>
+    <div class="slider" id="slider" role="region" aria-roledescription="carrossel" aria-label="Imagens da Create System IA">
+      <div class="slide on" style="--img: url('slide1.jpg')" role="img" aria-label="Jovem trabalhando em um notebook diante de uma janela grande com uma vista de galáxias e nebulosas"></div>
+      <div class="slide" style="--img: url('slide2.jpg')" role="img" aria-label="Logotipo Create System IA com um cérebro de circuitos e as letras IA dentro de um círculo luminoso"></div>
+      <div class="dots" id="dots">
+        <button class="dot" type="button" aria-label="Mostrar imagem 1" aria-current="true"></button>
+        <button class="dot" type="button" aria-label="Mostrar imagem 2" aria-current="false"></button>
+      </div>
+    </div>
+
+    <article class="letter" id="apresentacao">
+      <div>
+        <h1>Somos uma Fonte de Criação de sistemas de automação por IA</h1>
+      </div>
+      <p class="sub">Iniciada através de um PC e de um celular.</p>
+      <hr class="rule">
+
+      <p class="body">Criamos sistemas automáticos programados para atender a necessidade da sua loja, da sua empresa e do seu trabalho.</p>
+      <p class="body">Nosso principal início com o objetivo de dar um UP em seus negócios atraindo clientes e automatizando o seu marketing através da Inteligência Artificial.</p>
+
+      <span class="badge">SOLOPRENEUR</span>
+
+      <div class="contact" id="contato">
+        <p class="body">Podemos criar sistemas para atender as necessidades do seu negócio, nos envie um email:</p>
+        <div class="contact-row">
+          <a class="email" id="emailText" href="mailto:createsystemia@gmail.com">createsystemia@gmail.com</a>
+          <button class="btn" type="button" id="copyBtn">Copiar email</button>
+          <span class="msg" id="copyMsg" role="status"></span>
+        </div>
+        <div class="contact-row">
+          <span class="wa-label">WhatsApp:</span>
+          <a class="email" href="https://wa.me/5511985856665" target="_blank" rel="noopener">(11) 98585-6665</a>
+          <a class="btn wa-btn" href="https://wa.me/5511985856665" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        </div>
+      </div>
+    </article>
+  </main>
+</div>
+
+<a class="wa-float" href="https://wa.me/5511985856665" target="_blank" rel="noopener" aria-label="Chamar a Create System IA no WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.5 8.5 0 1 1 21 11.5z"></path>
+    <path d="M9 8.5c.3 2.8 2.7 5.2 5.5 5.5l1.3-1.3-2-1-.9.8c-1-.4-1.9-1.3-2.3-2.3l.8-.9-1-2L9 8.5z" fill="currentColor" stroke="none"></path>
+  </svg>
+  <span>WhatsApp</span>
+</a>
+
+<script>
+(function () {
+  var menuBtn = document.getElementById("menuBtn");
+  var menuList = document.getElementById("menuList");
+  function abrirMenu(abrir) {
+    menuList.hidden = !abrir;
+    menuBtn.setAttribute("aria-expanded", abrir ? "true" : "false");
+    menuBtn.setAttribute("aria-label", abrir ? "Fechar menu" : "Abrir menu");
+  }
+  menuBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    abrirMenu(menuList.hidden);
+  });
+  menuList.addEventListener("click", function (e) {
+    if (e.target.closest("a")) abrirMenu(false);
+  });
+  document.addEventListener("click", function (e) {
+    if (!menuList.hidden && !menuList.contains(e.target)) abrirMenu(false);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !menuList.hidden) {
+      abrirMenu(false);
+      menuBtn.focus();
+    }
+  });
+
+  var slides = document.querySelectorAll("#slider .slide");
+  var dots = document.querySelectorAll("#dots .dot");
+  var atual = 0;
+  var timer = null;
+  function mostrar(i) {
+    atual = (i + slides.length) % slides.length;
+    for (var s = 0; s < slides.length; s++) {
+      slides[s].classList.toggle("on", s === atual);
+      dots[s].setAttribute("aria-current", s === atual ? "true" : "false");
+    }
+  }
+  function iniciar() {
+    clearInterval(timer);
+    timer = setInterval(function () { mostrar(atual + 1); }, 5000);
+  }
+  for (var d = 0; d < dots.length; d++) {
+    (function (n) {
+      dots[n].addEventListener("click", function () { mostrar(n); iniciar(); });
+    })(d);
+  }
+  iniciar();
+
+  var btn = document.getElementById("copyBtn");
+  var msg = document.getElementById("copyMsg");
+  var email = "createsystemia@gmail.com";
+  function say(t) {
+    msg.textContent = t;
+    setTimeout(function () { msg.textContent = ""; }, 2600);
+  }
+  function selecionar() {
+    var el = document.getElementById("emailText");
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+    say("Selecionado. Use copiar do seu aparelho.");
+  }
+  btn.addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(function () { say("Email copiado."); }, selecionar);
+    } else {
+      selecionar();
+    }
+  });
+})();
+</script>
+</body>
+</html>
