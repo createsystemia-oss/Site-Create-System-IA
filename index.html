@@ -136,6 +136,10 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
 .menu a::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex: none; }
 .menu a:nth-child(even)::before { background: var(--green); }
 .menu a:hover, .menu a:focus-visible { background: var(--blue-soft); }
+.menu a.menu-app { border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; margin-top: 4px; padding-top: 14px; color: var(--green-ink); align-items: flex-start; line-height: 1.35; }
+.menu a.menu-app::before { display: none; }
+.menu a.menu-app svg { flex: none; margin-top: 1px; }
+.menu { width: 300px; }
 
 /* Carrossel */
 .slider {
@@ -263,6 +267,16 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
       <a href="#inicio">Início</a>
       <a href="#apresentacao">Apresentação</a>
       <a href="#contato">Contato</a>
+      <a class="menu-app" href="system-barber-10k.html" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="6" cy="6" r="3"></circle>
+          <circle cx="6" cy="18" r="3"></circle>
+          <path d="M20 4 8.1 15.9"></path>
+          <path d="M14.5 14.5 20 20"></path>
+          <path d="M8.1 8.1 12 12"></path>
+        </svg>
+        <span>System Barber 10k - Agenda para clientes de barbearias</span>
+      </a>
     </nav>
     <svg width="44" height="44" viewBox="0 0 30 30" aria-hidden="true">
       <rect x="2" y="2" width="17" height="17" rx="4" style="fill: var(--blue)"></rect>
