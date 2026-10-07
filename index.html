@@ -183,6 +183,8 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
   cursor: pointer;
 }
 .btn:hover { filter: brightness(1.08); }
+.wa-label { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; color: var(--green-ink); font-weight: 500; }
+.wa-btn { text-decoration: none; display: inline-block; background: var(--green-ink); border-color: var(--green-ink); color: var(--on-blue); }
 .msg { font-size: 13px; color: var(--green-ink); font-weight: 500; }
 
 @media (max-width: 480px) {
@@ -231,6 +233,11 @@ h1, h2 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -
           <a class="email" id="emailText" href="mailto:createsystemia@gmail.com">createsystemia@gmail.com</a>
           <button class="btn" type="button" id="copyBtn">Copiar email</button>
           <span class="msg" id="copyMsg" role="status"></span>
+        </div>
+        <div class="contact-row">
+          <span class="wa-label">WhatsApp:</span>
+          <a class="email" href="https://wa.me/5511985856665" target="_blank" rel="noopener">(11) 98585-6665</a>
+          <a class="btn wa-btn" href="https://wa.me/5511985856665" target="_blank" rel="noopener">Chamar no WhatsApp</a>
         </div>
       </div>
     </article>
