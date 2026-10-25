@@ -126,10 +126,6 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
           <span>Banco de 30 dias de posts</span>
         </button>
-        <button type="button" class="mitem" data-view="b2">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>30 publicações com imagens</span>
-        </button>
         <a class="mitem" href="system-barber-10k.html"><span>← Voltar à página System Barber 10k</span></a>
       </nav>
     </div>
@@ -143,7 +139,6 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
   </header>
 
   <div id="view-b1" hidden></div>
-  <div id="view-b2" hidden></div>
 </main>
 <script>
 (function () {
@@ -186,38 +181,6 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
     ["Dica", "Dias de mais procura", "Dica: observe quais dias e horários têm mais procura na sua barbearia.\n\nCom a agenda organizada fica mais fácil planejar a semana e atender melhor nos dias cheios."],
     ["Pergunta", "Qual a maior dor?", "Qual é a maior dor de cabeça da sua agenda hoje?\n\nHorário duplicado, cliente que some ou mensagem sem fim? Conta aqui. A System Barber 10k foi feita para ajudar com isso."],
     ["Resumo", "Fechando o ciclo", "Recapitulando a System Barber 10k:\n\nAgenda de horários para barbearias, o cliente escolhe serviço, data e horário, com suporte e atualizações, por apenas R$ 9,90 por mês."]
-  ];
-  var POSTS2 = [
-    ["Apresentação", "Sua agenda de barbearia", "Conheça a System Barber 10k: a agenda de horários para barbearias.\n\nO cliente escolhe o serviço, a data e o horário. Você organiza a rotina sem ficar preso ao celular."],
-    ["Horários perdidos", "Chega de horário perdido", "Horário perdido é dinheiro que não entra.\n\nCom a agenda System Barber 10k, as marcações ficam organizadas em um só lugar e você evita a confusão na hora de atender."],
-    ["Benefício", "Cliente marca sozinho", "Seu cliente quer marcar no horário que for melhor para ele.\n\nCom a System Barber 10k ele escolhe serviço, data e horário sozinho, e você não precisa trocar dezenas de mensagens."],
-    ["Oferta", "Menos que um lanche por mês", "R$ 9,90 por mês é menos que um lanche.\n\nÉ o valor da agenda System Barber 10k, com suporte e atualizações, para organizar os horários da sua barbearia."],
-    ["Pergunta", "Já duplicou um horário?", "Já aconteceu de marcar dois clientes no mesmo horário?\n\nConta aqui nos comentários. A System Barber 10k foi feita para evitar essa confusão."],
-    ["Dica", "Agenda cheia, cabeça tranquila", "Dica: concentre todas as marcações em um único lugar.\n\nQuando o horário está anotado em caderno, WhatsApp e memória ao mesmo tempo, o erro é questão de tempo. A System Barber 10k reúne tudo na agenda."],
-    ["Como funciona", "3 passos para o cliente", "Como o cliente marca na System Barber 10k:\n\n1. Escolhe o serviço\n2. Escolhe a data e o horário\n3. Informa nome, telefone e e-mail e confirma\n\nSimples assim."],
-    ["Benefício", "Mais tempo na cadeira", "Quanto menos tempo no celular, mais tempo na cadeira.\n\nA agenda System Barber 10k cuida das marcações para você focar em atender bem cada cliente."],
-    ["Dica", "Mostre seu trabalho", "Dica: poste com frequência fotos do seu trabalho, sempre com a autorização do cliente.\n\nE deixe o caminho de marcação fácil. A System Barber 10k ajuda nessa parte."],
-    ["Chamada", "Quer ver funcionando?", "Quer ver a agenda System Barber 10k funcionando?\n\nChame a gente no WhatsApp e tire suas dúvidas. Respondemos por lá."],
-    ["Dor", "Mensagem sem fim", "Cliente pergunta o horário, você responde, ele pergunta outro, você responde de novo...\n\nCom a System Barber 10k o próprio cliente vê os horários e escolhe. Menos conversa, mais agenda organizada."],
-    ["Dica", "Organize por tipo de serviço", "Dica: separe os seus serviços por tipo, como corte, barba e corte com barba.\n\nNa System Barber 10k o cliente escolhe o serviço antes de marcar, e tudo fica claro para os dois lados."],
-    ["Público", "Para organizar sua rotina", "A System Barber 10k é para o barbeiro ou cabeleireiro que quer organizar a rotina e profissionalizar o atendimento.\n\nUma agenda simples, por R$ 9,90 por mês."],
-    ["Dica", "Agradeça depois do corte", "Dica: agradeça o cliente depois do atendimento e convide para marcar o próximo horário.\n\nÉ um cuidado simples que fortalece a relação e mantém a agenda em movimento."],
-    ["Oferta", "Valor justo: R$ 9,90", "Agenda de horários para barbearias, com suporte e atualizações.\n\nSystem Barber 10k: R$ 9,90 por mês."],
-    ["Pergunta", "Caderno, memória ou agenda?", "Onde você guarda os horários dos seus clientes hoje: caderno, memória ou WhatsApp?\n\nConta aqui. Se quiser organizar tudo em um lugar só, conheça a System Barber 10k."],
-    ["Benefício", "Atendimento mais profissional", "Cliente que marca pela agenda percebe a organização.\n\nCom a System Barber 10k você passa uma imagem mais profissional desde a hora de marcar."],
-    ["Dica", "Divulgue o seu link", "Dica: coloque o link da sua agenda onde o cliente já olha, como a bio do Instagram.\n\nQuanto mais fácil de achar, mais fácil de marcar."],
-    ["Suporte", "Você não fica sozinho", "Sistema bom precisa de apoio.\n\nA System Barber 10k vem com suporte e atualizações. Se tiver dúvida, é só chamar no WhatsApp."],
-    ["Como funciona", "Serviço, data e horário", "Veja o caminho do seu cliente na agenda:\n\nEle escolhe o serviço, vê o calendário, escolhe a data e o horário disponível, e confirma.\n\nSystem Barber 10k."],
-    ["Dica", "Planeje a semana", "Dica: reserve alguns minutos no domingo para olhar a semana que vem.\n\nCom a agenda organizada na System Barber 10k, fica fácil enxergar os dias mais cheios e se preparar."],
-    ["Chamada", "Conheça a página", "Quer saber mais sobre a System Barber 10k?\n\nAcesse a página da agenda, veja as telas de demonstração e fale com a gente se tiver qualquer dúvida."],
-    ["Horários perdidos", "Fim da bagunça de horários", "Horário anotado em vários lugares vira bagunça.\n\nCom a System Barber 10k as marcações ficam organizadas e você evita dois clientes no mesmo horário."],
-    ["Benefício", "Rotina mais leve", "Uma rotina mais leve começa por uma agenda organizada.\n\nA System Barber 10k ajuda a reduzir o tempo gasto no WhatsApp com marcações."],
-    ["Dica", "Cuide do seu perfil", "Dica: mantenha o perfil da sua barbearia atualizado, com foto, endereço e contato.\n\nO cliente que gosta do que vê quer marcar. E a System Barber 10k deixa a marcação fácil."],
-    ["Pergunta", "O que mais toma seu tempo?", "O que mais toma o seu tempo fora da cadeira: responder mensagens, confirmar horários ou organizar a agenda?\n\nConta aqui. A System Barber 10k foi feita para ajudar nisso."],
-    ["Oferta", "Resumo: R$ 9,90 por mês", "Resumo da System Barber 10k:\n\nAgenda de horários para barbearias, o cliente escolhe serviço, data e horário, suporte e atualizações.\n\nR$ 9,90 por mês."],
-    ["Dica", "Deixe as regras claras", "Dica: deixe claras para o cliente as suas regras, como tolerância de atraso e aviso de cancelamento.\n\nQuem sabe o combinado cumpre melhor, e a agenda agradece."],
-    ["Chamada", "Dê o primeiro passo", "Organizar a agenda da sua barbearia começa com um primeiro passo.\n\nConheça a System Barber 10k e adira por R$ 9,90 por mês."],
-    ["Resumo", "Mais um ciclo, mesma agenda", "Mais um ciclo de divulgação completo!\n\nA System Barber 10k segue com o mesmo objetivo: agenda de horários para barbearias, simples para o cliente e leve para você."]
   ];
 
   var el = function (id) { return document.getElementById(id); };
@@ -426,10 +389,9 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
   }
 
   bancos.push(criarBanco({ id: "b1", posts: POSTS1, imagens: false, titulo: "Post do dia", kFeitos: "sb10k_feitos", kInicio: "sb10k_inicio" }));
-  bancos.push(criarBanco({ id: "b2", posts: POSTS2, imagens: true, titulo: "Publicação do dia, com imagem", kFeitos: "sb10k_feitos_img", kInicio: "sb10k_inicio_img" }));
 
   /* ---------- Menu ---------- */
-  var SUBS = { b1: "Banco de 30 dias de posts prontos de divulgação. Veja o post do dia, copie o texto e publique ou agende.", b2: "30 publicações com imagem. Baixe a arte do dia, copie o texto e publique ou agende." };
+  var SUBS = { b1: "Banco de 30 dias de posts prontos de divulgação. Veja o post do dia, copie o texto e publique ou agende." };
   var mb = el("menuBtn"), mp = el("menuPanel");
   function menu(abrir) { mp.hidden = !abrir; mb.setAttribute("aria-expanded", abrir ? "true" : "false"); }
   mb.addEventListener("click", function (e) { e.stopPropagation(); menu(mp.hidden); });
@@ -439,10 +401,10 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
   Array.prototype.forEach.call(mp.querySelectorAll("[data-view]"), function (b) {
     b.addEventListener("click", function () {
       var v = b.getAttribute("data-view");
-      ["b1", "b2"].forEach(function (x) { el("view-" + x).hidden = x !== v; });
+      el("view-b1").hidden = false;
       Array.prototype.forEach.call(mp.querySelectorAll("[data-view]"), function (o) { o.classList.toggle("on", o === b); });
       el("sub").textContent = SUBS[v]; menu(false);
-      bancos[v === "b1" ? 0 : 1].show();
+      bancos[0].show();
       el("view-" + v).scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
