@@ -50,11 +50,36 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
 .empty { text-align:center; padding:36px 12px; color:var(--muted); }
 .disc { font-size:13px; color:var(--muted); border-top:1px solid var(--line); padding-top:14px; }
 [hidden] { display:none !important; }
+.bar { align-items:center; }
+.motor-chip { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 12px; font-weight: 600; line-height: 1.3; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px 6px 10px; cursor: pointer; text-align: left; }
+.motor-chip:hover { color: var(--blue); border-color: var(--blue); }
+.motor-chip svg { flex: none; }
+.modal { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(7, 17, 30, 0.6); }
+.modal[hidden] { display: none; }
+.modal-box { width: 100%; max-width: 380px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-top: 6px solid var(--green-ink); border-radius: 14px; box-shadow: var(--shadow); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.modal-box h2 { font-size: 1.25rem; font-weight: 800; line-height: 1.2; }
+.modal-box .note { font-size: 14px; color: var(--muted); line-height: 1.5; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.field input { font: inherit; font-size: 16px; padding: 11px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
+.field input:focus-visible { outline: 3px solid var(--blue); outline-offset: 1px; }
+.modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.mb-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.modal-actions .btn { cursor: pointer; font-family: var(--font-body); }
+.form-msg { min-height: 1.4em; font-size: 14px; font-weight: 600; color: #b3261e; }
+.mb-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.modal-actions .btn.btn-ghost { background:transparent; color:var(--ink); border-color:var(--line); }
+.modal-actions .btn { cursor:pointer; }
 </style>
 </head>
 <body>
 <main class="wrap">
-  <div class="bar"><a href="index.html">← Voltar ao site Create System IA</a></div>
+  <div class="bar"><a href="index.html">← Voltar ao site Create System IA</a>
+    <button class="motor-chip" type="button" id="motorBtn" aria-haspopup="dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+      <span>Motor do Mercado Bilionário - Acesso somente para o Proprietário</span>
+    </button>
+  </div>
   <header class="head">
     <p class="kicker">Vitrine de ofertas</p>
     <h1>Mercado Bilionário</h1>
@@ -120,6 +145,88 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   fetch("produtos.json?v=" + Date.now(), { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
     produtos = (Array.isArray(d) ? d : []).filter(function (p) { return p && p.titulo && seguro(p.link); });
   }).catch(function () { produtos = []; }).then(function () { chips(); render(); });
+})();
+</script>
+<div class="modal" id="motorModal" hidden>
+  <form class="modal-box" id="motorForm" role="dialog" aria-modal="true" aria-labelledby="motorTitulo" autocomplete="on">
+    <h2 id="motorTitulo">Motor do Mercado Bilionário</h2>
+    <p class="note">Acesso somente para o Proprietário. Entre com o seu login e senha.</p>
+    <div class="field">
+      <label for="motorLogin">Login</label>
+      <input id="motorLogin" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    </div>
+    <div class="field">
+      <label for="motorSenha">Senha</label>
+      <input id="motorSenha" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <p class="form-msg" id="motorMsg" role="alert"></p>
+    <div class="modal-actions">
+      <button class="btn" type="submit" id="motorEntrar">Entrar</button>
+      <button class="btn btn-ghost" type="button" id="motorFechar">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+<script>
+(function () {
+  var SALT = "760455f2badfdff614bc03e2b4bf1212", ITER = 200000, HASH = "0364142e1198e90fb5f2e0d72dabf013352755d76857b96505f187248eca1c67";
+  var btn = document.getElementById("motorBtn");
+  var modal = document.getElementById("motorModal");
+  var form = document.getElementById("motorForm");
+  var msg = document.getElementById("motorMsg");
+  var loginEl = document.getElementById("motorLogin");
+  var senhaEl = document.getElementById("motorSenha");
+  var entrar = document.getElementById("motorEntrar");
+  var falhas = 0, bloqueado = false;
+
+  function abrir() { modal.hidden = false; msg.textContent = ""; loginEl.focus(); }
+  function fechar() { modal.hidden = true; senhaEl.value = ""; msg.textContent = ""; btn.focus(); }
+  btn.addEventListener("click", abrir);
+  document.getElementById("motorFechar").addEventListener("click", fechar);
+  modal.addEventListener("click", function (e) { if (e.target === modal) fechar(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) fechar(); });
+
+  function hex(buf) {
+    var a = new Uint8Array(buf), out = "";
+    for (var i = 0; i < a.length; i++) out += (a[i] < 16 ? "0" : "") + a[i].toString(16);
+    return out;
+  }
+  function bytes(h) {
+    var out = new Uint8Array(h.length / 2);
+    for (var i = 0; i < out.length; i++) out[i] = parseInt(h.substr(i * 2, 2), 16);
+    return out;
+  }
+  function derivar(login, senha) {
+    var enc = new TextEncoder();
+    return crypto.subtle.importKey("raw", enc.encode(login.trim().toLowerCase() + "\n" + (senha.normalize ? senha.normalize("NFC") : senha)), "PBKDF2", false, ["deriveBits"])
+      .then(function (k) {
+        return crypto.subtle.deriveBits({ name: "PBKDF2", salt: bytes(SALT), iterations: ITER, hash: "SHA-256" }, k, 256);
+      }).then(hex);
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (bloqueado) return;
+    if (!window.crypto || !crypto.subtle) { msg.textContent = "Este navegador não permite o login. Abra o site pelo endereço https."; return; }
+    msg.textContent = "Verificando...";
+    entrar.disabled = true;
+    derivar(loginEl.value, senhaEl.value).then(function (h) {
+      if (h === HASH) {
+        try { sessionStorage.setItem("mb_motor", h); } catch (err) {}
+        location.href = "motor-mercado-bilionario.html";
+        return;
+      }
+      falhas++;
+      senhaEl.value = "";
+      var espera = Math.min(30, falhas * 3);
+      msg.textContent = "Login ou senha incorretos. Aguarde " + espera + " s para tentar de novo.";
+      bloqueado = true;
+      setTimeout(function () { bloqueado = false; entrar.disabled = false; msg.textContent = ""; senhaEl.focus(); }, espera * 1000);
+    }, function () {
+      msg.textContent = "Não foi possível verificar. Tente de novo.";
+      entrar.disabled = false;
+    });
+  });
 })();
 </script>
 </body>
