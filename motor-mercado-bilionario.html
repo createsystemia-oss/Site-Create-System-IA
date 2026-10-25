@@ -67,6 +67,19 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   </section>
 
   <section class="panel">
+    <h2>Importar vários produtos de uma vez</h2>
+    <p class="note">Cole aqui os links de afiliado que a Shopee gerou (um por linha, quantos quiser, por exemplo 100) ou escolha um arquivo CSV. Se cada linha tiver o nome antes do link, o nome é aproveitado. O preço, escrito como R$ 49,90, também.</p>
+    <div class="form">
+      <div><label class="l" for="lojaL">Loja de todos os produtos</label><select id="lojaL"><option value="shopee">Shopee</option><option value="mercadolivre">Mercado Livre</option></select></div>
+      <div><label class="l" for="catL">Categoria de todos os produtos</label><select id="catL"></select></div>
+      <div class="full"><label class="l" for="lote">Lista de links</label><textarea id="lote" rows="7" placeholder="https://s.shopee.com.br/abc123&#10;Fone Bluetooth  https://s.shopee.com.br/def456&#10;Panela antiaderente R$ 59,90  https://s.shopee.com.br/ghi789"></textarea></div>
+      <div class="full"><label class="l" for="arq">Ou escolher um arquivo (CSV ou texto)</label><input type="file" id="arq" accept=".csv,.txt,.tsv,text/csv,text/plain"></div>
+      <div class="full row"><button class="btn green" type="button" id="importar">Importar todos</button><span class="msg" id="msgL" role="status"></span></div>
+    </div>
+    <p class="note">Produtos sem nome entram como "Produto 1", "Produto 2" e assim por diante. Edite depois na lista. Links repetidos e linhas sem link https são ignorados. Se o arquivo for Excel, copie as colunas e cole aqui, ou salve como CSV.</p>
+  </section>
+
+  <section class="panel">
     <h2>Produtos cadastrados (<span id="n">0</span>)</h2>
     <p class="warn" id="aviso" hidden>Você tem alterações que ainda não estão no site. Baixe o arquivo produtos.json e envie ao GitHub.</p>
     <div class="row"><button class="btn green" type="button" id="baixar">Baixar produtos.json</button><button class="btn ghost" type="button" id="recarregar">Recarregar o que está no site</button></div>
@@ -135,6 +148,72 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   el("recarregar").addEventListener("click", function () {
     if (sujo && !confirm("Isso descarta as alterações que ainda não foram publicadas. Continuar?")) return;
     doSite().then(function (d) { dados = d; sujo = false; guardar(); sair(); lista(); aviso("Carregado o que está no site."); });
+  });
+  CATS.forEach(function (c) { var o = document.createElement("option"); o.value = c; o.textContent = c; el("catL").appendChild(o); });
+  function csv(texto, d) {
+    var rows = [], row = [], cur = "", q = false;
+    for (var i = 0; i < texto.length; i++) {
+      var ch = texto[i];
+      if (q) { if (ch === '"') { if (texto[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
+      else if (ch === '"') q = true;
+      else if (ch === d) { row.push(cur); cur = ""; }
+      else if (ch === "\n" || ch === "\r") { if (ch === "\r" && texto[i + 1] === "\n") i++; row.push(cur); rows.push(row); row = []; cur = ""; }
+      else cur += ch;
+    }
+    row.push(cur); rows.push(row);
+    return rows.filter(function (r) { return r.some(function (c) { return c.trim(); }); });
+  }
+  var URLRE = /https:\/\/[^\s"'<>,;|\t]+/;
+  var PRECORE = /R\$\s?\d[\d.]*(?:,\d{1,2})?/;
+  function limpaNome(t) { return t.replace(/[\t|;]+/g, " ").replace(/\s{2,}/g, " ").replace(/^[\s\-–—,:]+|[\s\-–—,:]+$/g, "").trim(); }
+  function lerLote(texto) {
+    texto = texto.replace(/^\uFEFF/, "");
+    var linhas = texto.split(/\r?\n/).filter(function (l) { return l.trim(); });
+    if (!linhas.length) return [];
+    var out = [], prim = linhas[0].toLowerCase();
+    var cabec = !/https?:\/\//.test(prim) && /(link|url)/.test(prim) && linhas.length > 1;
+    if (cabec) {
+      var d = prim.indexOf("\t") > -1 ? "\t" : (prim.split(";").length > prim.split(",").length ? ";" : ",");
+      var rows = csv(texto, d), h = rows[0].map(function (x) { return x.trim().toLowerCase(); });
+      var idx = function (re) { for (var i = 0; i < h.length; i++) if (re.test(h[i])) return i; return -1; };
+      var iN = idx(/^(nome|produto|t[ií]tulo|name|title)/), iL = idx(/(link|url)/), iP = idx(/(pre[cç]o|price|valor)/), iC = idx(/categoria/), iD = idx(/descri/);
+      rows.slice(1).forEach(function (r) {
+        var link = (r[iL] || "").trim();
+        if (!URLRE.test(link)) { for (var k = 0; k < r.length; k++) { var m = URLRE.exec(r[k] || ""); if (m) { link = m[0]; break; } } } else link = URLRE.exec(link)[0];
+        if (!link) return;
+        var nome = iN > -1 ? (r[iN] || "").trim() : "";
+        out.push({ titulo: nome, link: link, preco: iP > -1 ? (r[iP] || "").trim() : "", categoria: iC > -1 ? (r[iC] || "").trim() : "", descricao: iD > -1 ? (r[iD] || "").trim() : "" });
+      });
+      return out;
+    }
+    linhas.forEach(function (l) {
+      var m = URLRE.exec(l); if (!m) return;
+      var resto = l.replace(m[0], " "), preco = "";
+      var pm = PRECORE.exec(resto); if (pm) { preco = pm[0]; resto = resto.replace(pm[0], " "); }
+      out.push({ titulo: limpaNome(resto), link: m[0], preco: preco, categoria: "", descricao: "" });
+    });
+    return out;
+  }
+  function msgL(t) { var m = el("msgL"); m.textContent = t; clearTimeout(msgL.t); msgL.t = setTimeout(function () { m.textContent = ""; }, 9000); }
+  el("arq").addEventListener("change", function () {
+    var f = el("arq").files[0]; if (!f) return;
+    var r = new FileReader(); r.onload = function () { el("lote").value = String(r.result || ""); msgL("Arquivo carregado. Clique em Importar todos."); }; r.readAsText(f);
+  });
+  el("importar").addEventListener("click", function () {
+    var itens = lerLote(el("lote").value);
+    if (!itens.length) { msgL("Nenhum link https encontrado. Cole os links ou escolha o arquivo."); return; }
+    var vistos = {}; dados.forEach(function (d) { vistos[d.link] = 1; });
+    var novos = [], ign = 0, n = 0, base = Date.now();
+    itens.forEach(function (it) {
+      if (!https(it.link) || vistos[it.link]) { ign++; return; }
+      vistos[it.link] = 1; n++;
+      var cat = CATS.indexOf(it.categoria) > -1 ? it.categoria : el("catL").value;
+      novos.push({ id: base + n, titulo: (it.titulo || "Produto " + n).slice(0, 120), loja: el("lojaL").value, categoria: cat, link: it.link, imagem: "", preco: (it.preco || "").slice(0, 30), descricao: (it.descricao || "").slice(0, 300) });
+    });
+    if (!novos.length) { msgL("Nada novo para importar: " + ign + " ignorado(s) (links repetidos ou inválidos)."); return; }
+    dados = novos.concat(dados); sujo = true; guardar(); lista();
+    el("lote").value = ""; el("arq").value = "";
+    msgL(novos.length + " produto(s) importado(s)" + (ign ? ", " + ign + " ignorado(s)" : "") + ". Agora baixe o produtos.json e envie ao GitHub.");
   });
   el("sair").addEventListener("click", function () { try { sessionStorage.removeItem("mb_motor"); } catch (e) {} location.href = "mercado-bilionario.html"; });
   var salvo = null, s = false; try { salvo = JSON.parse(localStorage.getItem(KEY) || "null"); s = !!localStorage.getItem(KEY + "_sujo"); } catch (e) {}
