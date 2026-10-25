@@ -2,12 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Motor da System Barber 10k</title>
-<style>
-html, body { margin: 0; height: 100%; background: #ffffff; color: #000000; }
-</style>
+<title>Motor System Barber 10k</title>
 <script>
 (function () {
   var ok = false;
@@ -15,7 +12,349 @@ html, body { margin: 0; height: 100%; background: #ffffff; color: #000000; }
   if (!ok) { location.replace("system-barber-10k.html"); }
 })();
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: coluna única; primeiro o post do dia (o que o proprietário precisa agora), depois o banco de 30 dias e o passo a passo do agendamento. */
+:root {
+  --bg: #f2f6fb; --surface: #ffffff; --ink: #0b1f3a; --muted: #4d6079; --line: #d3deec;
+  --blue: #1556e0; --blue-soft: #e2ebff; --on-blue: #ffffff;
+  --green: #12a874; --green-ink: #07704d; --green-soft: #d9f4e8;
+  --grid: rgba(21, 86, 224, 0.07);
+  --shadow: 0 1px 2px rgba(11, 31, 58, 0.06), 0 12px 32px -12px rgba(11, 31, 58, 0.18);
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #07111e; --surface: #0e1c2f; --ink: #e7effb; --muted: #95a8c2; --line: #1f3350;
+    --blue: #6b97ff; --blue-soft: #14284d; --on-blue: #07111e;
+    --green: #34d399; --green-ink: #4fe0a8; --green-soft: #0f3a2e;
+    --grid: rgba(107, 151, 255, 0.08);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #07111e; --surface: #0e1c2f; --ink: #e7effb; --muted: #95a8c2; --line: #1f3350;
+  --blue: #6b97ff; --blue-soft: #14284d; --on-blue: #07111e;
+  --green: #34d399; --green-ink: #4fe0a8; --green-soft: #0f3a2e;
+  --grid: rgba(107, 151, 255, 0.08);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-inline: 20px; padding-block: 24px 64px;
+}
+.wrap { max-width: 820px; margin-inline: auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
+.bar a, .bar button { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; color: var(--blue); background: none; border: 0; padding: 4px 0; cursor: pointer; text-decoration: none; }
+.bar a:hover, .bar button:hover { text-decoration: underline; }
+.head { display: flex; flex-direction: column; gap: 6px; }
+.kicker { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-ink); font-weight: 500; }
+.head h1 { font-size: clamp(1.7rem, 4.6vw, 2.4rem); font-weight: 800; line-height: 1.1; }
+.head p { color: var(--muted); max-width: 62ch; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: clamp(18px, 4vw, 32px); display: flex; flex-direction: column; gap: 18px; }
+.panel.lead { border-top: 6px solid var(--blue); }
+.panel h2 { font-size: 1.35rem; font-weight: 800; }
+.note { font-size: 14px; color: var(--muted); }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+legend { padding: 0; margin-bottom: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip label { display: inline-block; padding: 8px 14px; border: 1.5px solid var(--line); border-radius: 999px; font-size: 14px; font-weight: 500; cursor: pointer; background: var(--surface); }
+.chip label:hover { border-color: var(--blue); }
+.chip input:checked + label { background: var(--green-soft); border-color: var(--green); color: var(--green-ink); }
+.chip input:focus-visible + label { outline: 3px solid var(--blue); outline-offset: 2px; }
+.btn { font-family: var(--font-body); font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 10px; border: 1.5px solid var(--blue); background: var(--blue); color: var(--on-blue); cursor: pointer; text-decoration: none; display: inline-block; }
+.btn:hover { filter: brightness(1.08); }
+.btn.green { background: var(--green-ink); border-color: var(--green-ink); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--blue); color: var(--blue); filter: none; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.msg { font-size: 13px; font-weight: 600; color: var(--green-ink); min-height: 1.3em; }
+.today { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.today .big { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1; color: var(--blue); font-variant-numeric: tabular-nums; }
+.today .of { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.tema { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-ink); }
+.post { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--font-body); font-size: 16px; line-height: 1.65; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.datef { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+.datef input { font: inherit; padding: 7px 10px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
+.list { display: flex; flex-direction: column; gap: 8px; }
+details.item { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+details.item summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 44px minmax(0, 1fr); gap: 10px; align-items: center; padding: 12px 14px; }
+details.item summary::-webkit-details-marker { display: none; }
+details.item .dn { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--blue); }
+details.item .tt { font-weight: 600; font-size: 15px; min-width: 0; }
+details.item.done .tt { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--green); text-decoration-thickness: 2px; }
+details.item .inner { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 12px; }
+details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--green); cursor: pointer; }
+.steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.steps li::marker { font-family: var(--font-mono); color: var(--blue); }
+.menuwrap { position: relative; }
+.dots { display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 44px; height: 44px; align-items: center; background: var(--surface) !important; border: 1.5px solid var(--line) !important; border-radius: 12px; padding: 0 !important; cursor: pointer; }
+.dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); display: block; }
+.dots:hover { border-color: var(--blue) !important; text-decoration: none !important; }
+.menupanel { position: absolute; left: 0; top: 52px; z-index: 10; min-width: 270px; max-width: calc(100vw - 40px); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px; }
+.menupanel[hidden] { display: none; }
+.mitem { display: flex !important; align-items: center; gap: 10px; width: 100%; text-align: left; font-family: var(--font-body) !important; font-size: 15px !important; letter-spacing: 0 !important; font-weight: 600; color: var(--ink) !important; background: none; border: 0; border-radius: 8px; padding: 12px !important; cursor: pointer; text-decoration: none; }
+.mitem:hover, .mitem.on { background: var(--green-soft); color: var(--green-ink) !important; text-decoration: none !important; }
+.mitem svg { flex: none; color: var(--green-ink); }
+[hidden] { display: none !important; }
+</style>
 </head>
 <body>
+<main class="wrap">
+  <div class="bar">
+    <div class="menuwrap">
+      <button type="button" class="dots" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuPanel"><span></span><span></span><span></span></button>
+      <nav class="menupanel" id="menuPanel" hidden aria-label="Menu do motor">
+        <button type="button" class="mitem" id="itemBanco" data-view="banco">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+          <span>Banco de 30 dias de posts</span>
+        </button>
+        <a class="mitem" href="system-barber-10k.html"><span>← Voltar à página System Barber 10k</span></a>
+      </nav>
+    </div>
+    <button type="button" id="sair">Sair do motor</button>
+  </div>
+
+  <header class="head">
+    <p class="kicker">Painel do proprietário</p>
+    <h1>Motor System Barber 10k</h1>
+    <p id="sub">Abra o menu à esquerda para escolher uma ferramenta.</p>
+  </header>
+
+  <div id="viewBanco" hidden>
+
+  <section class="panel lead" aria-labelledby="t-hoje">
+    <h2 id="t-hoje">Post do dia</h2>
+    <fieldset>
+      <legend>Canal</legend>
+      <div class="chips" id="canais"></div>
+    </fieldset>
+    <div class="datef">
+      <label for="inicio">Começou a divulgar em</label>
+      <input type="date" id="inicio">
+      <button class="btn ghost" type="button" id="hoje0">Começar hoje</button>
+    </div>
+    <div class="today"><span class="big" id="diaN">Dia 1</span><span class="of" id="diaDe">de 30</span></div>
+    <p class="tema" id="tema"></p>
+    <pre class="post" id="texto"></pre>
+    <div class="row">
+      <button class="btn" type="button" id="copiar">Copiar texto</button>
+      <a class="btn green" id="zap" target="_blank" rel="noopener" href="#">Abrir no WhatsApp</a>
+      <button class="btn ghost" type="button" id="ant">← Dia anterior</button>
+      <button class="btn ghost" type="button" id="prox">Próximo dia →</button>
+    </div>
+    <p class="msg" id="msg" role="status"></p>
+  </section>
+
+  <section class="panel" aria-labelledby="t-30">
+    <h2 id="t-30">Todos os 30 dias</h2>
+    <p class="note">Abra um dia para ver o texto e copiar. Marque os dias que você já publicou ou agendou; a marcação fica salva só neste navegador. Ao terminar os 30 dias, o ciclo recomeça.</p>
+    <div class="list" id="lista"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-agendar">
+    <h2 id="t-agendar">Como agendar a semana inteira no Meta Business Suite</h2>
+    <p class="note">Gratuito, para Instagram e Facebook. Os nomes dos menus podem mudar com o tempo.</p>
+    <ol class="steps">
+      <li>Acesse o Meta Business Suite pelo navegador ou pelo aplicativo, com a conta da página do Facebook e do Instagram da sua divulgação.</li>
+      <li>Toque em Criar publicação e escolha onde publicar: Instagram, Facebook ou os dois.</li>
+      <li>Cole o texto copiado aqui e adicione uma imagem. Você pode usar as telas de demonstração da agenda ou uma foto da sua barbearia.</li>
+      <li>Em vez de Publicar, escolha Agendar e marque a data e o horário.</li>
+      <li>Repita para os próximos dias da semana e marque os dias aqui como agendados.</li>
+    </ol>
+    <p class="note">Publique no ritmo que fizer sentido, por exemplo um post por dia. Muitos posts seguidos pioram o alcance e podem levar a restrições na conta.</p>
+  </section>
+  </div>
+</main>
+
+<script>
+(function () {
+  var ZAP = "(11) 98585-6665";
+  var SITE = "www.createsystemia.com.br/system-barber-10k.html";
+  var CANAIS = { instagram: "Instagram", facebook: "Facebook", whatsapp: "WhatsApp (Status ou grupos)" };
+  var TAGS = [
+    "#barbearia #barbeiro #agendaonline #systembarber10k",
+    "#gestaodebarbearia #agendamento #barbershop #systembarber10k",
+    "#barbeariabrasil #empreendedorismo #agendadigital #systembarber10k"
+  ];
+
+  // [tema, título curto, texto]
+  var POSTS = [
+    ["Apresentação", "Conheça a agenda", "Conheça a System Barber 10k, a agenda de horários feita para barbearias.\n\nO cliente escolhe o serviço, a data e o horário. Você foca no que faz de melhor: atender e transformar o visual dos seus clientes."],
+    ["Horários perdidos", "Dois clientes no mesmo horário", "Dois clientes marcados no mesmo horário?\n\nCom a System Barber 10k você acaba com a confusão das marcações e profissionaliza a gestão do seu espaço."],
+    ["WhatsApp", "O dia todo no WhatsApp", "Passa o dia respondendo mensagem no WhatsApp só para marcar horário?\n\nCom a agenda System Barber 10k, o cliente escolhe o horário sozinho e você ganha tempo para o que importa: a cadeira."],
+    ["Oferta", "R$ 9,90 por mês", "Agenda System Barber 10k por apenas R$ 9,90 por mês.\n\nÉ uma agenda de horários para barbearias, com suporte e atualizações para você trabalhar com tranquilidade."],
+    ["Como funciona", "O cliente escolhe o serviço", "Veja como é simples para o seu cliente: ele escolhe o serviço, como corte, barba ou corte e barba, e já vê o preço e a duração.\n\nSem troca de mensagens e sem dúvida."],
+    ["Dica", "Confirme no dia anterior", "Dica para barbeiros: confirme o horário com o cliente no dia anterior.\n\nÉ um cuidado simples que ajuda a manter a agenda organizada. A System Barber 10k ajuda a deixar tudo em um só lugar."],
+    ["Pergunta", "Quantas mensagens por dia?", "Pergunta para os barbeiros: quantas mensagens você responde por dia só para marcar horário?\n\nConta aqui nos comentários. A System Barber 10k foi feita para diminuir esse trabalho."],
+    ["Benefício", "Foco em atender", "Barbeiro bom quer estar na cadeira, não no celular.\n\nA System Barber 10k cuida das marcações para você focar em atender e transformar o visual dos seus clientes."],
+    ["Como funciona", "Calendário do mês", "O cliente abre o calendário do mês, escolhe a data e vê os horários disponíveis.\n\nÉ assim que funciona a agenda System Barber 10k: simples para o cliente e menos trabalho para você."],
+    ["Dica", "Tempo de cada serviço", "Dica de organização: defina o tempo de cada serviço na agenda.\n\nCorte, barba e corte com barba levam tempos diferentes. Com isso os horários não se sobrepõem e ninguém fica esperando."],
+    ["Oferta", "Cerca de R$ 0,33 por dia", "R$ 9,90 por mês dá cerca de R$ 0,33 por dia.\n\nÉ o custo da agenda System Barber 10k para organizar os horários da sua barbearia."],
+    ["Suporte", "Suporte e atualizações", "Agenda boa também precisa de suporte.\n\nA System Barber 10k vem com o suporte necessário e atualizações, para você ficar confortável em relação ao seu trabalho."],
+    ["Dica", "Intervalo fixo de almoço", "Dica: reserve um intervalo fixo para o almoço e deixe isso claro na agenda.\n\nVocê descansa e o cliente sabe quando consegue marcar."],
+    ["Dica", "Regra de atraso", "Dica: combine uma regra de tolerância de atraso e avise o cliente na hora de marcar.\n\nAssim todo mundo sabe o que esperar e a agenda do dia flui melhor."],
+    ["Como funciona", "Confirmar o agendamento", "Último passo do cliente: informar nome, telefone e e-mail e confirmar o agendamento.\n\nPronto. O horário fica marcado, sem confusão. Essa é a agenda System Barber 10k."],
+    ["Pergunta", "Caderno ou WhatsApp?", "Você ainda marca horário no caderno ou pelo WhatsApp?\n\nConta aqui como você faz hoje. Existe um jeito mais organizado, e custa R$ 9,90 por mês: a System Barber 10k."],
+    ["Chamada", "Chame no WhatsApp", "Quer organizar os horários da sua barbearia?\n\nChama no WhatsApp e conheça a agenda System Barber 10k. Respondemos por lá."],
+    ["Benefício", "Gestão profissional", "É hora de profissionalizar a gestão do seu espaço.\n\nMenos confusão nas marcações, mais organização e mais tempo para atender. Esse é o objetivo da System Barber 10k."],
+    ["Dica", "Serviços e preços claros", "Dica: deixe seus serviços e preços claros para o cliente, como corte, barba e corte com barba.\n\nNa System Barber 10k o cliente já vê o valor e o tempo de cada um na hora de escolher."],
+    ["Público", "Barbeiros e cabeleireiros", "A System Barber 10k foi pensada na rotina corrida de barbeiros e cabeleireiros.\n\nPara quem quer lucrar mais, se organizar melhor e acabar com a dor de cabeça das marcações."],
+    ["Horários perdidos", "Tempo perdido", "Cada mensagem para marcar horário é tempo que você poderia usar atendendo.\n\nCom a agenda System Barber 10k, o cliente marca sozinho e a sua rotina fica mais leve."],
+    ["Oferta", "Resumo da oferta", "Resumo rápido da System Barber 10k:\n\nAgenda de horários para barbearias, suporte e atualizações, por apenas R$ 9,90 por mês."],
+    ["Dica", "Mostre seu trabalho", "Dica de divulgação: poste fotos do seu trabalho, como antes e depois, sempre com a autorização do cliente.\n\nBoas fotos atraem novos clientes. E a agenda organizada ajuda a atender todos eles."],
+    ["Como funciona", "Veja as telas", "Quer ver como é a agenda por dentro?\n\nO cliente escolhe o serviço, a data e confirma o agendamento. Veja as telas de demonstração na página da System Barber 10k."],
+    ["Dica", "Peça avaliação", "Dica: peça uma avaliação no Google para o cliente que saiu satisfeito.\n\nAvaliações ajudam novos clientes a encontrar e confiar na sua barbearia."],
+    ["Benefício", "Rotina corrida", "Rotina corrida pede agenda organizada.\n\nA System Barber 10k ajuda você a manter os horários em ordem, sem correria e sem esquecimento."],
+    ["Chamada", "Conheça a página", "Quer conhecer a System Barber 10k com calma?\n\nAcesse a página da agenda, veja as telas e tire as suas dúvidas com a gente."],
+    ["Dica", "Dias de mais procura", "Dica: observe quais dias e horários têm mais procura na sua barbearia.\n\nCom a agenda organizada fica mais fácil planejar a semana e atender melhor nos dias cheios."],
+    ["Pergunta", "Qual a maior dor?", "Qual é a maior dor de cabeça da sua agenda hoje?\n\nHorário duplicado, cliente que some ou mensagem sem fim? Conta aqui. A System Barber 10k foi feita para ajudar com isso."],
+    ["Resumo", "Fechando o ciclo", "Recapitulando a System Barber 10k:\n\nAgenda de horários para barbearias, o cliente escolhe serviço, data e horário, com suporte e atualizações, por apenas R$ 9,90 por mês."]
+  ];
+
+  var canal = "instagram";
+  var atual = 0;
+  var feitos = {};
+  var inicio = null;
+
+  function load(k, def) { try { var v = localStorage.getItem(k); return v === null ? def : v; } catch (e) { return def; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  try { feitos = JSON.parse(load("sb10k_feitos", "{}")) || {}; } catch (e) { feitos = {}; }
+
+  function hojeISO() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, "0"), dia = String(d.getDate()).padStart(2, "0");
+    return d.getFullYear() + "-" + m + "-" + dia;
+  }
+  function diasDesde(iso) {
+    var a = iso.split("-").map(Number), t = new Date();
+    var d0 = Date.UTC(a[0], a[1] - 1, a[2]), d1 = Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
+    return Math.round((d1 - d0) / 86400000);
+  }
+  function indiceDeHoje() {
+    var n = diasDesde(inicio);
+    if (n < 0) return 0;
+    return n % POSTS.length;
+  }
+
+  function cta() {
+    if (canal === "instagram") return "Link na bio. Chame no WhatsApp: " + ZAP;
+    if (canal === "facebook") return "Saiba mais: https://" + SITE + "\nWhatsApp: " + ZAP;
+    return "Saiba mais: https://" + SITE;
+  }
+  function textoDoDia(i) {
+    var t = POSTS[i][2] + "\n\n" + cta();
+    if (canal !== "whatsapp") t += "\n\n" + TAGS[i % TAGS.length];
+    return t;
+  }
+
+  var el = function (id) { return document.getElementById(id); };
+  var msg = el("msg");
+  function aviso(t) { msg.textContent = t; clearTimeout(aviso.t); aviso.t = setTimeout(function () { msg.textContent = ""; }, 2600); }
+  function copiar(texto) {
+    function fallback() {
+      var ta = document.createElement("textarea"); ta.value = texto; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+      aviso(ok ? "Texto copiado." : "Não foi possível copiar. Selecione o texto e copie.");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(function () { aviso("Texto copiado."); }, fallback);
+    else fallback();
+  }
+
+  function mostrarHoje() {
+    el("diaN").textContent = "Dia " + (atual + 1);
+    el("diaDe").textContent = "de " + POSTS.length;
+    el("tema").textContent = POSTS[atual][0] + " · " + POSTS[atual][1];
+    var t = textoDoDia(atual);
+    el("texto").textContent = t;
+    el("zap").href = "https://wa.me/?text=" + encodeURIComponent(t);
+    el("zap").hidden = canal !== "whatsapp";
+  }
+
+  function montarLista() {
+    var box = el("lista"); box.textContent = "";
+    POSTS.forEach(function (p, i) {
+      var d = document.createElement("details"); d.className = "item" + (feitos[i] ? " done" : "");
+      var s = document.createElement("summary");
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!feitos[i]; cb.setAttribute("aria-label", "Marcar dia " + (i + 1) + " como agendado");
+      cb.addEventListener("click", function (e) { e.stopPropagation(); });
+      cb.addEventListener("change", function () { feitos[i] = cb.checked; d.classList.toggle("done", cb.checked); save("sb10k_feitos", JSON.stringify(feitos)); });
+      var dn = document.createElement("span"); dn.className = "dn"; dn.textContent = "Dia " + (i + 1);
+      var tt = document.createElement("span"); tt.className = "tt"; tt.textContent = p[0] + " · " + p[1];
+      s.appendChild(cb); s.appendChild(dn); s.appendChild(tt);
+      var inner = document.createElement("div"); inner.className = "inner";
+      var pre = document.createElement("pre"); pre.className = "post"; pre.textContent = textoDoDia(i);
+      var row = document.createElement("div"); row.className = "row";
+      var b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "Copiar texto";
+      b.addEventListener("click", function () { copiar(textoDoDia(i)); });
+      row.appendChild(b); inner.appendChild(pre); inner.appendChild(row);
+      d.appendChild(s); d.appendChild(inner); box.appendChild(d);
+    });
+  }
+
+  // canais
+  Object.keys(CANAIS).forEach(function (k) {
+    var c = document.createElement("div"); c.className = "chip";
+    var i = document.createElement("input"); i.type = "radio"; i.name = "canal"; i.id = "canal-" + k; i.value = k; i.checked = k === canal;
+    var l = document.createElement("label"); l.htmlFor = i.id; l.textContent = CANAIS[k];
+    i.addEventListener("change", function () { canal = k; save("sb10k_canal", k); mostrarHoje(); montarLista(); });
+    c.appendChild(i); c.appendChild(l); el("canais").appendChild(c);
+  });
+  var cs = load("sb10k_canal", "instagram");
+  if (CANAIS[cs]) { canal = cs; var r = el("canal-" + cs); if (r) r.checked = true; }
+
+  // data de início
+  inicio = load("sb10k_inicio", "") || hojeISO();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(inicio)) inicio = hojeISO();
+  save("sb10k_inicio", inicio);
+  el("inicio").value = inicio;
+  el("inicio").addEventListener("change", function () {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(el("inicio").value)) { inicio = el("inicio").value; save("sb10k_inicio", inicio); atual = indiceDeHoje(); mostrarHoje(); }
+  });
+  el("hoje0").addEventListener("click", function () { inicio = hojeISO(); el("inicio").value = inicio; save("sb10k_inicio", inicio); atual = 0; mostrarHoje(); aviso("Contagem reiniciada: hoje é o dia 1."); });
+
+  el("copiar").addEventListener("click", function () { copiar(textoDoDia(atual)); });
+  el("ant").addEventListener("click", function () { atual = (atual + POSTS.length - 1) % POSTS.length; mostrarHoje(); });
+  el("prox").addEventListener("click", function () { atual = (atual + 1) % POSTS.length; mostrarHoje(); });
+  el("sair").addEventListener("click", function () {
+    try { sessionStorage.removeItem("sb10k_motor"); } catch (e) {}
+    location.href = "system-barber-10k.html";
+  });
+
+  // menu lateral
+  var mb = el("menuBtn"), mp = el("menuPanel");
+  function menu(abrir) { mp.hidden = !abrir; mb.setAttribute("aria-expanded", abrir ? "true" : "false"); }
+  mb.addEventListener("click", function (e) { e.stopPropagation(); menu(mp.hidden); });
+  mp.addEventListener("click", function (e) { e.stopPropagation(); });
+  document.addEventListener("click", function () { menu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { menu(false); mb.focus(); } });
+  el("itemBanco").addEventListener("click", function () {
+    el("viewBanco").hidden = false; el("itemBanco").classList.add("on");
+    el("sub").textContent = "Banco de 30 dias de posts prontos de divulgação. Veja o post do dia, copie o texto e publique ou agende.";
+    menu(false); el("t-hoje").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  atual = indiceDeHoje();
+  mostrarHoje();
+  montarLista();
+})();
+</script>
 </body>
 </html>
