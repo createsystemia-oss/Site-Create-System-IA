@@ -34,7 +34,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
 .chips { display:flex; flex-wrap:wrap; gap:8px; } .chip { padding:7px 14px; border:1.5px solid var(--line); border-radius:999px; font:500 14px var(--font-body); background:var(--surface); color:var(--ink); cursor:pointer; } .chip:hover { border-color:var(--blue); } .chip[aria-pressed=true] { background:var(--green-soft); border-color:var(--green); color:var(--green-ink); }
 .msg { font-size:13px; font-weight:600; color:var(--green-ink); min-height:1.3em; }
 
-.tools { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; } @media (max-width:560px){ .tools { grid-template-columns:1fr; } }
+.tools { display:flex; }
 .tools select { width:auto; }
 .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; }
 .card { background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column; }
@@ -76,28 +76,25 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
 </head>
 <body>
 <main class="wrap">
-  <div class="bar"><a href="index.html">← Voltar ao site Create System IA</a>
-    <button class="motor-chip" type="button" id="motorBtn" aria-haspopup="dialog">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
-      <span>Motor do Mercado Bilionário - Acesso somente para o Proprietário</span>
-    </button>
-  </div>
+  <div class="bar"><a href="index.html">← Voltar ao site Create System IA</a></div>
   <header class="head">
     <p class="kicker">Vitrine de ofertas</p>
     <h1>Mercado Bilionário</h1>
     <p class="sub">Produtos selecionados da Shopee e do Mercado Livre. Escolha, compare e finalize a compra com segurança no site da própria loja.</p>
   </header>
   <section class="panel" aria-label="Buscar produtos">
-    <div class="tools">
-      <input type="search" id="busca" placeholder="Buscar produto (ex.: fone, panela, tênis)" aria-label="Buscar produto" autocomplete="off">
-      <select id="loja" aria-label="Loja"><option value="">Todas as lojas</option><option value="shopee">Shopee</option><option value="mercadolivre">Mercado Livre</option></select>
-    </div>
     <div class="chips" id="cats" role="group" aria-label="Categorias"></div>
     <p class="note" id="contagem" role="status"></p>
   </section>
   <section class="grid" id="grade" aria-label="Produtos"></section>
   <p class="empty panel" id="vazio" hidden></p>
   <p class="disc">Aviso: somos afiliados da Shopee e do Mercado Livre e podemos receber uma comissão pelas compras feitas pelos nossos links, sem custo adicional para você. A compra, o pagamento, a entrega, a troca e o atendimento são de responsabilidade da loja onde você finalizar o pedido. Preços e disponibilidade podem mudar, confira sempre na página da loja. Dúvidas: WhatsApp (11) 98585-6665 · createsystemia@gmail.com</p>
+  <div class="footmotor">
+    <button class="motor-chip" type="button" id="motorBtn" aria-haspopup="dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+      <span>Motor do Mercado Bilionário - Acesso somente para o Proprietário</span>
+    </button>
+  </div>
 </main>
 <script>
 (function () {
@@ -109,10 +106,10 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   function chips() {
     var box = el("cats"); box.textContent = "";
     var usadas = {}; produtos.forEach(function (p) { usadas[p.categoria] = 1; });
-    ["Todas"].concat(CATS.filter(function (c) { return usadas[c]; })).forEach(function (c) {
+    CATS.filter(function (c) { return usadas[c]; }).forEach(function (c) {
       var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = c;
-      var v = c === "Todas" ? "" : c; b.setAttribute("aria-pressed", String(cat === v));
-      b.addEventListener("click", function () { cat = v; chips(); render(); }); box.appendChild(b);
+      var v = c; b.setAttribute("aria-pressed", String(cat === v));
+      b.addEventListener("click", function () { cat = (cat === v ? "" : v); chips(); render(); }); box.appendChild(b);
     });
   }
   function card(p) {
@@ -132,7 +129,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     a.appendChild(pic); a.appendChild(b); return a;
   }
   function render() {
-    var q = norm(el("busca").value), lj = el("loja").value, g = el("grade"); g.textContent = "";
+    var q = "", lj = "", g = el("grade"); g.textContent = "";
     var lista = produtos.filter(function (p) {
       return (!cat || p.categoria === cat) && (!lj || p.loja === lj) && (!q || norm(p.titulo + " " + p.descricao + " " + p.categoria).indexOf(q) !== -1);
     });
@@ -143,7 +140,6 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     else if (!lista.length) { v.hidden = false; v.textContent = "Nenhum produto encontrado para essa busca. Tente outra palavra ou categoria."; }
     else v.hidden = true;
   }
-  el("busca").addEventListener("input", render); el("loja").addEventListener("change", render);
   fetch("produtos.json?v=" + Date.now(), { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
     produtos = (Array.isArray(d) ? d : []).filter(function (p) { return p && p.titulo && seguro(p.link); });
   }).catch(function () { produtos = []; }).then(function () { chips(); render(); });
