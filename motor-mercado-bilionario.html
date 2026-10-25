@@ -58,7 +58,8 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
       <div><label class="l" for="loja">Loja</label><select id="loja"><option value="shopee">Shopee</option><option value="mercadolivre">Mercado Livre</option></select></div>
       <div><label class="l" for="categoria">Categoria</label><select id="categoria"></select></div>
       <div class="full"><label class="l" for="link">Seu link de afiliado</label><input type="url" id="link" required placeholder="https://..."></div>
-      <div class="full"><label class="l" for="imagem">Link da imagem (opcional)</label><input type="url" id="imagem" placeholder="https://... (se deixar vazio, aparece um quadro com a inicial)"></div>
+      <div class="full"><label class="l" for="foto">Foto do produto (opcional)</label><input type="file" id="foto" accept="image/jpeg,image/png,image/webp"><p class="note">Escolha uma foto do seu computador. Ela é reduzida automaticamente e guardada dentro do produtos.json. Use só fotos que você tem direito de usar.</p><div class="row"><img id="prev" alt="Prévia da foto" hidden style="width:96px;height:96px;object-fit:cover;border-radius:10px;border:1px solid var(--line)"><button class="btn ghost" type="button" id="tirarFoto" hidden>Remover foto</button></div></div>
+      <div class="full"><label class="l" for="imagem">Ou link de uma imagem (opcional)</label><input type="url" id="imagem" placeholder="https://..."></div>
       <div><label class="l" for="preco">Preço (opcional)</label><input type="text" id="preco" maxlength="30" placeholder="Ex.: R$ 49,90"></div>
       <div class="full"><label class="l" for="descricao">Descrição curta (opcional)</label><textarea id="descricao" maxlength="300"></textarea></div>
       <div class="full row"><button class="btn" type="submit" id="salvar">Adicionar à vitrine</button><button class="btn ghost" type="button" id="cancelar" hidden>Cancelar edição</button><span class="msg" id="msg" role="status"></span></div>
@@ -98,6 +99,26 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   var KEY = "mb_rascunho", dados = [], editando = null, sujo = false;
   var el = function (i) { return document.getElementById(i); };
   CATS.forEach(function (c) { var o = document.createElement("option"); o.value = c; o.textContent = c; el("categoria").appendChild(o); });
+  var fotoData = "";
+  function prever() { var pv = el("prev"); var src = fotoData || (https(el("imagem").value.trim()) ? el("imagem").value.trim() : ""); pv.hidden = !src; if (src) pv.src = src; el("tirarFoto").hidden = !src; }
+  el("foto").addEventListener("change", function () {
+    var f = el("foto").files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      var im = new Image();
+      im.onload = function () {
+        var m = 640, w = im.width, h = im.height, k = Math.min(1, m / Math.max(w, h)), c = document.createElement("canvas");
+        c.width = Math.round(w * k); c.height = Math.round(h * k);
+        var x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
+        fotoData = c.toDataURL("image/jpeg", 0.78); el("imagem").value = ""; prever(); aviso("Foto carregada.");
+      };
+      im.onerror = function () { aviso("Não foi possível ler essa imagem."); };
+      im.src = String(r.result);
+    };
+    r.readAsDataURL(f);
+  });
+  el("imagem").addEventListener("input", function () { if (el("imagem").value.trim()) { fotoData = ""; } prever(); });
+  el("tirarFoto").addEventListener("click", function () { fotoData = ""; el("imagem").value = ""; el("foto").value = ""; prever(); });
   function https(u) { try { return new URL(u).protocol === "https:"; } catch (e) { return false; } }
   function aviso(t) { el("msg").textContent = t; clearTimeout(aviso.t); aviso.t = setTimeout(function () { el("msg").textContent = ""; }, 3500); }
   function guardar() { try { localStorage.setItem(KEY, JSON.stringify(dados)); localStorage.setItem(KEY + "_sujo", sujo ? "1" : ""); } catch (e) {} }
@@ -107,7 +128,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     dados.forEach(function (d, i) {
       var it = document.createElement("div"); it.className = "item";
       var t = document.createElement("span"); t.className = "t"; t.textContent = d.titulo;
-      var m = document.createElement("span"); m.className = "m"; m.textContent = (LOJAS[d.loja] || d.loja) + " · " + d.categoria + (d.preco ? " · " + d.preco : "");
+      var m = document.createElement("span"); m.className = "m"; m.textContent = (LOJAS[d.loja] || d.loja) + " · " + d.categoria + (d.preco ? " · " + d.preco : "") + (d.imagem ? " · com foto" : "");
       var r = document.createElement("div"); r.className = "row";
       var e = document.createElement("button"); e.type = "button"; e.className = "btn ghost"; e.textContent = "Editar"; e.addEventListener("click", function () { editar(i); });
       var x = document.createElement("button"); x.type = "button"; x.className = "btn danger"; x.textContent = "Excluir";
@@ -123,17 +144,18 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   }
   function editar(i) {
     var d = dados[i]; editando = i;
-    ["titulo","loja","categoria","link","imagem","preco","descricao"].forEach(function (k) { el(k).value = d[k] || ""; });
+    ["titulo","loja","categoria","link","preco","descricao"].forEach(function (k) { el(k).value = d[k] || ""; });
+    fotoData = (d.imagem || "").indexOf("data:image/") === 0 ? d.imagem : ""; el("imagem").value = fotoData ? "" : (d.imagem || ""); el("foto").value = ""; prever();
     el("tf").textContent = "Editar produto"; el("salvar").textContent = "Salvar alterações"; el("cancelar").hidden = false; el("titulo").focus();
   }
-  function sair() { editando = null; el("f").reset(); el("tf").textContent = "Adicionar produto"; el("salvar").textContent = "Adicionar à vitrine"; el("cancelar").hidden = true; }
+  function sair() { editando = null; el("f").reset(); fotoData = ""; prever(); el("tf").textContent = "Adicionar produto"; el("salvar").textContent = "Adicionar à vitrine"; el("cancelar").hidden = true; }
   el("cancelar").addEventListener("click", sair);
   el("f").addEventListener("submit", function (e) {
     e.preventDefault();
-    var o = { id: editando !== null ? dados[editando].id : Date.now(), icone: editando !== null ? (dados[editando].icone || "") : "", titulo: el("titulo").value.trim(), loja: el("loja").value, categoria: el("categoria").value, link: el("link").value.trim(), imagem: el("imagem").value.trim(), preco: el("preco").value.trim(), descricao: el("descricao").value.trim() };
+    var o = { id: editando !== null ? dados[editando].id : Date.now(), icone: editando !== null ? (dados[editando].icone || "") : "", titulo: el("titulo").value.trim(), loja: el("loja").value, categoria: el("categoria").value, link: el("link").value.trim(), imagem: fotoData || el("imagem").value.trim(), preco: el("preco").value.trim(), descricao: el("descricao").value.trim() };
     if (!o.titulo) { aviso("Informe o nome do produto."); return; }
     if (!https(o.link)) { aviso("O link do produto precisa começar com https://"); return; }
-    if (o.imagem && !https(o.imagem)) { aviso("O link da imagem precisa começar com https://"); return; }
+    if (o.imagem && !fotoData && !https(o.imagem)) { aviso("O link da imagem precisa começar com https://"); return; }
     if (editando !== null) dados[editando] = o; else dados.unshift(o);
     sujo = true; guardar(); var era = editando !== null; sair(); lista(); aviso(era ? "Produto atualizado." : "Produto adicionado.");
   });
