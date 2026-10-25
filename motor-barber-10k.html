@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Motor System Barber 10k</title>
+<title>Motor da System Barber 10k</title>
 <script>
 (function () {
   var ok = false;
@@ -107,12 +107,14 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
 .dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); display: block; }
 .dots:hover { border-color: var(--blue) !important; text-decoration: none !important; }
 .menupanel { position: absolute; left: 0; top: 52px; z-index: 10; min-width: 270px; max-width: calc(100vw - 40px); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px; }
-.menupanel[hidden] { display: none; }
 .mitem { display: flex !important; align-items: center; gap: 10px; width: 100%; text-align: left; font-family: var(--font-body) !important; font-size: 15px !important; letter-spacing: 0 !important; font-weight: 600; color: var(--ink) !important; background: none; border: 0; border-radius: 8px; padding: 12px !important; cursor: pointer; text-decoration: none; }
 .mitem:hover, .mitem.on { background: var(--green-soft); color: var(--green-ink) !important; text-decoration: none !important; }
 .mitem svg { flex: none; color: var(--green-ink); }
 [hidden] { display: none !important; }
+.art { width: 100%; max-width: 480px; aspect-ratio: 1 / 1; height: auto; display: block; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); }
+.artrow { display: flex; flex-direction: column; gap: 10px; }
 </style>
+
 </head>
 <body>
 <main class="wrap">
@@ -120,9 +122,13 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
     <div class="menuwrap">
       <button type="button" class="dots" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuPanel"><span></span><span></span><span></span></button>
       <nav class="menupanel" id="menuPanel" hidden aria-label="Menu do motor">
-        <button type="button" class="mitem" id="itemBanco" data-view="banco">
+        <button type="button" class="mitem" data-view="b1">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
           <span>Banco de 30 dias de posts</span>
+        </button>
+        <button type="button" class="mitem" data-view="b2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>30 publicações com imagens</span>
         </button>
         <a class="mitem" href="system-barber-10k.html"><span>← Voltar à página System Barber 10k</span></a>
       </nav>
@@ -136,52 +142,9 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
     <p id="sub">Abra o menu à esquerda para escolher uma ferramenta.</p>
   </header>
 
-  <div id="viewBanco" hidden>
-
-  <section class="panel lead" aria-labelledby="t-hoje">
-    <h2 id="t-hoje">Post do dia</h2>
-    <fieldset>
-      <legend>Canal</legend>
-      <div class="chips" id="canais"></div>
-    </fieldset>
-    <div class="datef">
-      <label for="inicio">Começou a divulgar em</label>
-      <input type="date" id="inicio">
-      <button class="btn ghost" type="button" id="hoje0">Começar hoje</button>
-    </div>
-    <div class="today"><span class="big" id="diaN">Dia 1</span><span class="of" id="diaDe">de 30</span></div>
-    <p class="tema" id="tema"></p>
-    <pre class="post" id="texto"></pre>
-    <div class="row">
-      <button class="btn" type="button" id="copiar">Copiar texto</button>
-      <a class="btn green" id="zap" target="_blank" rel="noopener" href="#">Abrir no WhatsApp</a>
-      <button class="btn ghost" type="button" id="ant">← Dia anterior</button>
-      <button class="btn ghost" type="button" id="prox">Próximo dia →</button>
-    </div>
-    <p class="msg" id="msg" role="status"></p>
-  </section>
-
-  <section class="panel" aria-labelledby="t-30">
-    <h2 id="t-30">Todos os 30 dias</h2>
-    <p class="note">Abra um dia para ver o texto e copiar. Marque os dias que você já publicou ou agendou; a marcação fica salva só neste navegador. Ao terminar os 30 dias, o ciclo recomeça.</p>
-    <div class="list" id="lista"></div>
-  </section>
-
-  <section class="panel" aria-labelledby="t-agendar">
-    <h2 id="t-agendar">Como agendar a semana inteira no Meta Business Suite</h2>
-    <p class="note">Gratuito, para Instagram e Facebook. Os nomes dos menus podem mudar com o tempo.</p>
-    <ol class="steps">
-      <li>Acesse o Meta Business Suite pelo navegador ou pelo aplicativo, com a conta da página do Facebook e do Instagram da sua divulgação.</li>
-      <li>Toque em Criar publicação e escolha onde publicar: Instagram, Facebook ou os dois.</li>
-      <li>Cole o texto copiado aqui e adicione uma imagem. Você pode usar as telas de demonstração da agenda ou uma foto da sua barbearia.</li>
-      <li>Em vez de Publicar, escolha Agendar e marque a data e o horário.</li>
-      <li>Repita para os próximos dias da semana e marque os dias aqui como agendados.</li>
-    </ol>
-    <p class="note">Publique no ritmo que fizer sentido, por exemplo um post por dia. Muitos posts seguidos pioram o alcance e podem levar a restrições na conta.</p>
-  </section>
-  </div>
+  <div id="view-b1" hidden></div>
+  <div id="view-b2" hidden></div>
 </main>
-
 <script>
 (function () {
   var ZAP = "(11) 98585-6665";
@@ -192,9 +155,7 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
     "#gestaodebarbearia #agendamento #barbershop #systembarber10k",
     "#barbeariabrasil #empreendedorismo #agendadigital #systembarber10k"
   ];
-
-  // [tema, título curto, texto]
-  var POSTS = [
+  var POSTS1 = [
     ["Apresentação", "Conheça a agenda", "Conheça a System Barber 10k, a agenda de horários feita para barbearias.\n\nO cliente escolhe o serviço, a data e o horário. Você foca no que faz de melhor: atender e transformar o visual dos seus clientes."],
     ["Horários perdidos", "Dois clientes no mesmo horário", "Dois clientes marcados no mesmo horário?\n\nCom a System Barber 10k você acaba com a confusão das marcações e profissionaliza a gestão do seu espaço."],
     ["WhatsApp", "O dia todo no WhatsApp", "Passa o dia respondendo mensagem no WhatsApp só para marcar horário?\n\nCom a agenda System Barber 10k, o cliente escolhe o horário sozinho e você ganha tempo para o que importa: a cadeira."],
@@ -226,135 +187,271 @@ details.item input[type="checkbox"] { width: 18px; height: 18px; accent-color: v
     ["Pergunta", "Qual a maior dor?", "Qual é a maior dor de cabeça da sua agenda hoje?\n\nHorário duplicado, cliente que some ou mensagem sem fim? Conta aqui. A System Barber 10k foi feita para ajudar com isso."],
     ["Resumo", "Fechando o ciclo", "Recapitulando a System Barber 10k:\n\nAgenda de horários para barbearias, o cliente escolhe serviço, data e horário, com suporte e atualizações, por apenas R$ 9,90 por mês."]
   ];
+  var POSTS2 = [
+    ["Apresentação", "Sua agenda de barbearia", "Conheça a System Barber 10k: a agenda de horários para barbearias.\n\nO cliente escolhe o serviço, a data e o horário. Você organiza a rotina sem ficar preso ao celular."],
+    ["Horários perdidos", "Chega de horário perdido", "Horário perdido é dinheiro que não entra.\n\nCom a agenda System Barber 10k, as marcações ficam organizadas em um só lugar e você evita a confusão na hora de atender."],
+    ["Benefício", "Cliente marca sozinho", "Seu cliente quer marcar no horário que for melhor para ele.\n\nCom a System Barber 10k ele escolhe serviço, data e horário sozinho, e você não precisa trocar dezenas de mensagens."],
+    ["Oferta", "Menos que um lanche por mês", "R$ 9,90 por mês é menos que um lanche.\n\nÉ o valor da agenda System Barber 10k, com suporte e atualizações, para organizar os horários da sua barbearia."],
+    ["Pergunta", "Já duplicou um horário?", "Já aconteceu de marcar dois clientes no mesmo horário?\n\nConta aqui nos comentários. A System Barber 10k foi feita para evitar essa confusão."],
+    ["Dica", "Agenda cheia, cabeça tranquila", "Dica: concentre todas as marcações em um único lugar.\n\nQuando o horário está anotado em caderno, WhatsApp e memória ao mesmo tempo, o erro é questão de tempo. A System Barber 10k reúne tudo na agenda."],
+    ["Como funciona", "3 passos para o cliente", "Como o cliente marca na System Barber 10k:\n\n1. Escolhe o serviço\n2. Escolhe a data e o horário\n3. Informa nome, telefone e e-mail e confirma\n\nSimples assim."],
+    ["Benefício", "Mais tempo na cadeira", "Quanto menos tempo no celular, mais tempo na cadeira.\n\nA agenda System Barber 10k cuida das marcações para você focar em atender bem cada cliente."],
+    ["Dica", "Mostre seu trabalho", "Dica: poste com frequência fotos do seu trabalho, sempre com a autorização do cliente.\n\nE deixe o caminho de marcação fácil. A System Barber 10k ajuda nessa parte."],
+    ["Chamada", "Quer ver funcionando?", "Quer ver a agenda System Barber 10k funcionando?\n\nChame a gente no WhatsApp e tire suas dúvidas. Respondemos por lá."],
+    ["Dor", "Mensagem sem fim", "Cliente pergunta o horário, você responde, ele pergunta outro, você responde de novo...\n\nCom a System Barber 10k o próprio cliente vê os horários e escolhe. Menos conversa, mais agenda organizada."],
+    ["Dica", "Organize por tipo de serviço", "Dica: separe os seus serviços por tipo, como corte, barba e corte com barba.\n\nNa System Barber 10k o cliente escolhe o serviço antes de marcar, e tudo fica claro para os dois lados."],
+    ["Público", "Para organizar sua rotina", "A System Barber 10k é para o barbeiro ou cabeleireiro que quer organizar a rotina e profissionalizar o atendimento.\n\nUma agenda simples, por R$ 9,90 por mês."],
+    ["Dica", "Agradeça depois do corte", "Dica: agradeça o cliente depois do atendimento e convide para marcar o próximo horário.\n\nÉ um cuidado simples que fortalece a relação e mantém a agenda em movimento."],
+    ["Oferta", "Valor justo: R$ 9,90", "Agenda de horários para barbearias, com suporte e atualizações.\n\nSystem Barber 10k: R$ 9,90 por mês."],
+    ["Pergunta", "Caderno, memória ou agenda?", "Onde você guarda os horários dos seus clientes hoje: caderno, memória ou WhatsApp?\n\nConta aqui. Se quiser organizar tudo em um lugar só, conheça a System Barber 10k."],
+    ["Benefício", "Atendimento mais profissional", "Cliente que marca pela agenda percebe a organização.\n\nCom a System Barber 10k você passa uma imagem mais profissional desde a hora de marcar."],
+    ["Dica", "Divulgue o seu link", "Dica: coloque o link da sua agenda onde o cliente já olha, como a bio do Instagram.\n\nQuanto mais fácil de achar, mais fácil de marcar."],
+    ["Suporte", "Você não fica sozinho", "Sistema bom precisa de apoio.\n\nA System Barber 10k vem com suporte e atualizações. Se tiver dúvida, é só chamar no WhatsApp."],
+    ["Como funciona", "Serviço, data e horário", "Veja o caminho do seu cliente na agenda:\n\nEle escolhe o serviço, vê o calendário, escolhe a data e o horário disponível, e confirma.\n\nSystem Barber 10k."],
+    ["Dica", "Planeje a semana", "Dica: reserve alguns minutos no domingo para olhar a semana que vem.\n\nCom a agenda organizada na System Barber 10k, fica fácil enxergar os dias mais cheios e se preparar."],
+    ["Chamada", "Conheça a página", "Quer saber mais sobre a System Barber 10k?\n\nAcesse a página da agenda, veja as telas de demonstração e fale com a gente se tiver qualquer dúvida."],
+    ["Horários perdidos", "Fim da bagunça de horários", "Horário anotado em vários lugares vira bagunça.\n\nCom a System Barber 10k as marcações ficam organizadas e você evita dois clientes no mesmo horário."],
+    ["Benefício", "Rotina mais leve", "Uma rotina mais leve começa por uma agenda organizada.\n\nA System Barber 10k ajuda a reduzir o tempo gasto no WhatsApp com marcações."],
+    ["Dica", "Cuide do seu perfil", "Dica: mantenha o perfil da sua barbearia atualizado, com foto, endereço e contato.\n\nO cliente que gosta do que vê quer marcar. E a System Barber 10k deixa a marcação fácil."],
+    ["Pergunta", "O que mais toma seu tempo?", "O que mais toma o seu tempo fora da cadeira: responder mensagens, confirmar horários ou organizar a agenda?\n\nConta aqui. A System Barber 10k foi feita para ajudar nisso."],
+    ["Oferta", "Resumo: R$ 9,90 por mês", "Resumo da System Barber 10k:\n\nAgenda de horários para barbearias, o cliente escolhe serviço, data e horário, suporte e atualizações.\n\nR$ 9,90 por mês."],
+    ["Dica", "Deixe as regras claras", "Dica: deixe claras para o cliente as suas regras, como tolerância de atraso e aviso de cancelamento.\n\nQuem sabe o combinado cumpre melhor, e a agenda agradece."],
+    ["Chamada", "Dê o primeiro passo", "Organizar a agenda da sua barbearia começa com um primeiro passo.\n\nConheça a System Barber 10k e adira por R$ 9,90 por mês."],
+    ["Resumo", "Mais um ciclo, mesma agenda", "Mais um ciclo de divulgação completo!\n\nA System Barber 10k segue com o mesmo objetivo: agenda de horários para barbearias, simples para o cliente e leve para você."]
+  ];
 
-  var canal = "instagram";
-  var atual = 0;
-  var feitos = {};
-  var inicio = null;
-
+  var el = function (id) { return document.getElementById(id); };
   function load(k, def) { try { var v = localStorage.getItem(k); return v === null ? def : v; } catch (e) { return def; } }
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  try { feitos = JSON.parse(load("sb10k_feitos", "{}")) || {}; } catch (e) { feitos = {}; }
+  var canal = load("sb10k_canal", "instagram");
+  if (!CANAIS[canal]) canal = "instagram";
+  var bancos = [];
 
   function hojeISO() {
     var d = new Date();
-    var m = String(d.getMonth() + 1).padStart(2, "0"), dia = String(d.getDate()).padStart(2, "0");
-    return d.getFullYear() + "-" + m + "-" + dia;
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }
   function diasDesde(iso) {
     var a = iso.split("-").map(Number), t = new Date();
-    var d0 = Date.UTC(a[0], a[1] - 1, a[2]), d1 = Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
-    return Math.round((d1 - d0) / 86400000);
+    return Math.round((Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) - Date.UTC(a[0], a[1] - 1, a[2])) / 86400000);
   }
-  function indiceDeHoje() {
-    var n = diasDesde(inicio);
-    if (n < 0) return 0;
-    return n % POSTS.length;
-  }
-
   function cta() {
     if (canal === "instagram") return "Link na bio. Chame no WhatsApp: " + ZAP;
     if (canal === "facebook") return "Saiba mais: https://" + SITE + "\nWhatsApp: " + ZAP;
     return "Saiba mais: https://" + SITE;
   }
-  function textoDoDia(i) {
-    var t = POSTS[i][2] + "\n\n" + cta();
+  function textoDe(posts, i) {
+    var t = posts[i][2] + "\n\n" + cta();
     if (canal !== "whatsapp") t += "\n\n" + TAGS[i % TAGS.length];
     return t;
   }
-
-  var el = function (id) { return document.getElementById(id); };
-  var msg = el("msg");
-  function aviso(t) { msg.textContent = t; clearTimeout(aviso.t); aviso.t = setTimeout(function () { msg.textContent = ""; }, 2600); }
-  function copiar(texto) {
-    function fallback() {
+  function copiar(texto, aviso) {
+    function fb() {
       var ta = document.createElement("textarea"); ta.value = texto; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
       document.body.appendChild(ta); ta.select();
       var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
       document.body.removeChild(ta);
       aviso(ok ? "Texto copiado." : "Não foi possível copiar. Selecione o texto e copie.");
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(function () { aviso("Texto copiado."); }, fallback);
-    else fallback();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texto).then(function () { aviso("Texto copiado."); }, fb);
+    else fb();
   }
 
-  function mostrarHoje() {
-    el("diaN").textContent = "Dia " + (atual + 1);
-    el("diaDe").textContent = "de " + POSTS.length;
-    el("tema").textContent = POSTS[atual][0] + " · " + POSTS[atual][1];
-    var t = textoDoDia(atual);
-    el("texto").textContent = t;
-    el("zap").href = "https://wa.me/?text=" + encodeURIComponent(t);
-    el("zap").hidden = canal !== "whatsapp";
+  /* ---------- Arte (imagem 1080x1080 gerada no navegador) ---------- */
+  var PAL = [
+    { b1: "#0b1f3a", b2: "#14408f", acc: "#34d399", txt: "#ffffff", sub: "#a9c4ff" },
+    { b1: "#06553b", b2: "#0b3b5c", acc: "#9bf0cb", txt: "#ffffff", sub: "#bfe8d6" },
+    { b1: "#f2f6fb", b2: "#d6e4ff", acc: "#12a874", txt: "#0b1f3a", sub: "#1556e0" },
+    { b1: "#1556e0", b2: "#0b1f3a", acc: "#6ee7b7", txt: "#ffffff", sub: "#cfe0ff" }
+  ];
+  function rr(c, x, y, w, h, r) {
+    c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+  }
+  function icone(c, tipo, cx, cy, r) {
+    c.save(); c.translate(cx, cy); c.lineCap = "round"; c.lineJoin = "round"; c.lineWidth = 14;
+    if (tipo === 0) { // tesoura
+      c.beginPath(); c.arc(-0.55 * r, 0.62 * r, 0.3 * r, 0, 7); c.stroke();
+      c.beginPath(); c.arc(0.55 * r, 0.62 * r, 0.3 * r, 0, 7); c.stroke();
+      c.beginPath(); c.moveTo(-0.45 * r, 0.36 * r); c.lineTo(0.5 * r, -0.95 * r); c.stroke();
+      c.beginPath(); c.moveTo(0.45 * r, 0.36 * r); c.lineTo(-0.5 * r, -0.95 * r); c.stroke();
+    } else if (tipo === 1) { // navalha
+      c.rotate(-0.55);
+      rr(c, -r, -0.14 * r, 1.35 * r, 0.28 * r, 0.1 * r); c.stroke();
+      rr(c, 0.3 * r, -0.18 * r, 0.8 * r, 0.36 * r, 0.14 * r); c.stroke();
+      c.beginPath(); c.arc(0.3 * r, 0, 0.05 * r, 0, 7); c.stroke();
+      c.beginPath(); c.moveTo(-0.85 * r, 0); c.lineTo(0.1 * r, 0); c.stroke();
+    } else if (tipo === 2) { // pente
+      c.rotate(-0.3);
+      rr(c, -r, -0.35 * r, 2 * r, 0.4 * r, 0.12 * r); c.stroke();
+      for (var k = 0; k < 9; k++) { var x = -0.88 * r + k * 0.22 * r; c.beginPath(); c.moveTo(x, 0.05 * r); c.lineTo(x, 0.55 * r); c.stroke(); }
+    } else if (tipo === 3) { // relógio
+      c.beginPath(); c.arc(0, 0, r * 0.85, 0, 7); c.stroke();
+      c.beginPath(); c.moveTo(0, -0.5 * r); c.lineTo(0, 0); c.lineTo(0.38 * r, 0.22 * r); c.stroke();
+    } else if (tipo === 4) { // calendário
+      rr(c, -0.85 * r, -0.8 * r, 1.7 * r, 1.6 * r, 0.14 * r); c.stroke();
+      c.beginPath(); c.moveTo(-0.85 * r, -0.35 * r); c.lineTo(0.85 * r, -0.35 * r); c.stroke();
+      c.beginPath(); c.moveTo(-0.4 * r, -1 * r); c.lineTo(-0.4 * r, -0.6 * r); c.moveTo(0.4 * r, -1 * r); c.lineTo(0.4 * r, -0.6 * r); c.stroke();
+      c.beginPath(); c.moveTo(-0.35 * r, 0.15 * r); c.lineTo(-0.05 * r, 0.45 * r); c.lineTo(0.5 * r, -0.1 * r); c.stroke();
+    } else { // mensagem
+      rr(c, -0.95 * r, -0.7 * r, 1.9 * r, 1.25 * r, 0.2 * r); c.stroke();
+      c.beginPath(); c.moveTo(-0.45 * r, 0.55 * r); c.lineTo(-0.55 * r, 0.95 * r); c.lineTo(-0.1 * r, 0.55 * r); c.stroke();
+      for (var d = -1; d <= 1; d++) { c.beginPath(); c.arc(d * 0.5 * r, -0.08 * r, 0.05 * r, 0, 7); c.fill(); }
+    }
+    c.restore();
+  }
+  function quebrar(c, texto, maxW) {
+    var pal = texto.split(" "), linhas = [], l = "";
+    pal.forEach(function (p) { var t = l ? l + " " + p : p; if (c.measureText(t).width > maxW && l) { linhas.push(l); l = p; } else l = t; });
+    if (l) linhas.push(l); return linhas;
+  }
+  function desenhar(canvas, i, post) {
+    var S = 1080, c = canvas.getContext("2d"); canvas.width = S; canvas.height = S;
+    var p = PAL[i % PAL.length], g = c.createLinearGradient(0, 0, S, S);
+    g.addColorStop(0, p.b1); g.addColorStop(1, p.b2); c.fillStyle = g; c.fillRect(0, 0, S, S);
+    c.strokeStyle = p.sub; c.globalAlpha = 0.12; c.lineWidth = 2;
+    for (var k = 0; k <= S; k += 54) { c.beginPath(); c.moveTo(k, 0); c.lineTo(k, S); c.stroke(); c.beginPath(); c.moveTo(0, k); c.lineTo(S, k); c.stroke(); }
+    c.globalAlpha = 1;
+    c.fillStyle = p.acc; rr(c, 72, 72, 110, 12, 6); c.fill();
+    c.fillStyle = p.sub; c.font = "500 30px 'JetBrains Mono', ui-monospace, monospace"; c.textBaseline = "alphabetic";
+    c.fillText(("DIA " + (i + 1) + "  ·  " + post[0]).toUpperCase(), 72, 138);
+    c.fillStyle = p.txt; var fam = "'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif", fs = 104, linhas;
+    for (; fs >= 64; fs -= 8) { c.font = "800 " + fs + "px " + fam; linhas = quebrar(c, post[1], 900); if (linhas.length <= 4) break; }
+    var y = 270 + fs * 0.9;
+    linhas.forEach(function (ln, j) { c.fillText(ln, 72, y + j * fs * 1.08); });
+    c.strokeStyle = p.acc; c.fillStyle = p.acc; c.globalAlpha = 0.95;
+    icone(c, i % 6, 800, 700, 190); c.globalAlpha = 1;
+    c.fillStyle = p.acc; c.fillRect(72, 900, 936, 3);
+    c.fillStyle = p.txt; c.font = "800 44px " + fam; c.fillText("System Barber 10k", 72, 972);
+    c.fillStyle = p.sub; c.font = "500 28px 'Instrument Sans', system-ui, sans-serif"; c.fillText("Agenda de horários para barbearias · www.createsystemia.com.br", 72, 1022);
+    c.fillStyle = p.acc; rr(c, 760, 928, 248, 62, 31); c.fill();
+    c.fillStyle = (i % 4 === 2) ? "#ffffff" : p.b1; c.font = "800 32px " + fam; c.textAlign = "center"; c.fillText("R$ 9,90/mês", 884, 970); c.textAlign = "left";
+  }
+  function fontes() {
+    if (!document.fonts || !document.fonts.load) return Promise.resolve();
+    return Promise.all([document.fonts.load("800 60px 'Bricolage Grotesque'"), document.fonts.load("500 28px 'Instrument Sans'"), document.fonts.load("500 30px 'JetBrains Mono'")]).catch(function () {});
+  }
+  function baixar(canvas, nome, aviso) {
+    canvas.toBlob(function (b) {
+      if (!b) { aviso("Não foi possível gerar a imagem."); return; }
+      var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = nome;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      aviso("Imagem baixada.");
+    }, "image/png");
   }
 
-  function montarLista() {
-    var box = el("lista"); box.textContent = "";
-    POSTS.forEach(function (p, i) {
-      var d = document.createElement("details"); d.className = "item" + (feitos[i] ? " done" : "");
-      var s = document.createElement("summary");
-      var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!feitos[i]; cb.setAttribute("aria-label", "Marcar dia " + (i + 1) + " como agendado");
-      cb.addEventListener("click", function (e) { e.stopPropagation(); });
-      cb.addEventListener("change", function () { feitos[i] = cb.checked; d.classList.toggle("done", cb.checked); save("sb10k_feitos", JSON.stringify(feitos)); });
-      var dn = document.createElement("span"); dn.className = "dn"; dn.textContent = "Dia " + (i + 1);
-      var tt = document.createElement("span"); tt.className = "tt"; tt.textContent = p[0] + " · " + p[1];
-      s.appendChild(cb); s.appendChild(dn); s.appendChild(tt);
-      var inner = document.createElement("div"); inner.className = "inner";
-      var pre = document.createElement("pre"); pre.className = "post"; pre.textContent = textoDoDia(i);
-      var row = document.createElement("div"); row.className = "row";
-      var b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "Copiar texto";
-      b.addEventListener("click", function () { copiar(textoDoDia(i)); });
-      row.appendChild(b); inner.appendChild(pre); inner.appendChild(row);
-      d.appendChild(s); d.appendChild(inner); box.appendChild(d);
+  /* ---------- Banco (fábrica) ---------- */
+  function criarBanco(cfg) {
+    var P = cfg.posts, id = cfg.id, box = el("view-" + id), atual = 0, feitos = {}, inicio;
+    try { feitos = JSON.parse(load(cfg.kFeitos, "{}")) || {}; } catch (e) { feitos = {}; }
+    var q = function (s) { return el(id + "-" + s); };
+    var arte = cfg.imagens ? '<div class="artrow"><canvas class="art" id="' + id + '-art" aria-label="Imagem do post"></canvas><div class="row"><button class="btn green" type="button" id="' + id + '-baixar">Baixar imagem</button></div></div>' : "";
+    box.innerHTML =
+      '<div class="wrap" style="gap:20px">' +
+      '<section class="panel lead"><h2 id="' + id + '-t">' + cfg.titulo + '</h2>' +
+      '<fieldset><legend>Canal</legend><div class="chips" id="' + id + '-canais"></div></fieldset>' +
+      '<div class="datef"><label for="' + id + '-inicio">Começou a divulgar em</label><input type="date" id="' + id + '-inicio"><button class="btn ghost" type="button" id="' + id + '-hoje0">Começar hoje</button></div>' +
+      '<div class="today"><span class="big" id="' + id + '-diaN">Dia 1</span><span class="of">de ' + P.length + '</span></div>' +
+      '<p class="tema" id="' + id + '-tema"></p>' + arte +
+      '<pre class="post" id="' + id + '-texto"></pre>' +
+      '<div class="row"><button class="btn" type="button" id="' + id + '-copiar">Copiar texto</button>' +
+      '<a class="btn green" id="' + id + '-zap" target="_blank" rel="noopener" href="#">Abrir no WhatsApp</a>' +
+      '<button class="btn ghost" type="button" id="' + id + '-ant">← Dia anterior</button><button class="btn ghost" type="button" id="' + id + '-prox">Próximo dia →</button></div>' +
+      '<p class="msg" id="' + id + '-msg" role="status"></p></section>' +
+      '<section class="panel"><h2>Todos os ' + P.length + ' dias</h2>' +
+      '<p class="note">Abra um dia para ver o texto' + (cfg.imagens ? ' e a imagem' : '') + '. Marque os dias que você já publicou ou agendou; a marcação fica salva só neste navegador. Ao terminar, o ciclo recomeça.</p>' +
+      '<div class="list" id="' + id + '-lista"></div></section>' +
+      (cfg.imagens ? '' : '<section class="panel"><h2>Como agendar a semana inteira no Meta Business Suite</h2><p class="note">Gratuito, para Instagram e Facebook. Os nomes dos menus podem mudar com o tempo.</p><ol class="steps"><li>Acesse o Meta Business Suite pelo navegador ou pelo aplicativo, com a conta da página do Facebook e do Instagram da sua divulgação.</li><li>Toque em Criar publicação e escolha onde publicar: Instagram, Facebook ou os dois.</li><li>Cole o texto copiado aqui e adicione uma imagem. Você pode usar as telas de demonstração da agenda ou uma foto da sua barbearia.</li><li>Em vez de Publicar, escolha Agendar e marque a data e o horário.</li><li>Repita para os próximos dias da semana e marque os dias aqui como agendados.</li></ol><p class="note">Publique no ritmo que fizer sentido, por exemplo um post por dia. Muitos posts seguidos pioram o alcance e podem levar a restrições na conta.</p></section>') +
+      (cfg.imagens ? '<section class="panel"><h2>Como publicar com imagem</h2><ol class="steps"><li>Toque em Baixar imagem no dia que você vai publicar.</li><li>Toque em Copiar texto.</li><li>No Meta Business Suite, escolha Criar publicação, anexe a imagem baixada e cole o texto.</li><li>Escolha Agendar, marque data e horário e confirme.</li></ol><p class="note">As imagens são artes gráficas geradas aqui mesmo, no padrão verde e azul da Create System IA. Você também pode trocar por uma foto real da sua barbearia quando tiver uma boa.</p></section>' : '') +
+      '</div>';
+    function aviso(t) { var m = q("msg"); m.textContent = t; clearTimeout(aviso.t); aviso.t = setTimeout(function () { m.textContent = ""; }, 2600); }
+    function indiceHoje() { var n = diasDesde(inicio); return n < 0 ? 0 : n % P.length; }
+    var pronto = false;
+    function mostrar() {
+      q("diaN").textContent = "Dia " + (atual + 1);
+      q("tema").textContent = P[atual][0] + " · " + P[atual][1];
+      var t = textoDe(P, atual); q("texto").textContent = t;
+      q("zap").href = "https://wa.me/?text=" + encodeURIComponent(t); q("zap").hidden = canal !== "whatsapp";
+      if (cfg.imagens) fontes().then(function () { desenhar(q("art"), atual, P[atual]); });
+    }
+    function lista() {
+      var L = q("lista"); L.textContent = "";
+      P.forEach(function (p, i) {
+        var d = document.createElement("details"); d.className = "item" + (feitos[i] ? " done" : "");
+        var s = document.createElement("summary");
+        var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!feitos[i]; cb.setAttribute("aria-label", "Marcar dia " + (i + 1) + " como agendado");
+        cb.addEventListener("click", function (e) { e.stopPropagation(); });
+        cb.addEventListener("change", function () { feitos[i] = cb.checked; d.classList.toggle("done", cb.checked); save(cfg.kFeitos, JSON.stringify(feitos)); });
+        var dn = document.createElement("span"); dn.className = "dn"; dn.textContent = "Dia " + (i + 1);
+        var tt = document.createElement("span"); tt.className = "tt"; tt.textContent = p[0] + " · " + p[1];
+        s.appendChild(cb); s.appendChild(dn); s.appendChild(tt);
+        var inner = document.createElement("div"), cv = null; inner.className = "inner";
+        if (cfg.imagens) {
+          cv = document.createElement("canvas"); cv.className = "art"; cv.setAttribute("aria-label", "Imagem do dia " + (i + 1));
+          inner.appendChild(cv);
+          d.addEventListener("toggle", function () { if (d.open && !cv.dataset.ok) { cv.dataset.ok = "1"; fontes().then(function () { desenhar(cv, i, p); }); } });
+        }
+        var pre = document.createElement("pre"); pre.className = "post"; pre.textContent = textoDe(P, i); pre.dataset.i = i;
+        var row = document.createElement("div"); row.className = "row";
+        var b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "Copiar texto";
+        b.addEventListener("click", function () { copiar(textoDe(P, i), aviso); });
+        row.appendChild(b);
+        if (cv) { var bi = document.createElement("button"); bi.type = "button"; bi.className = "btn green"; bi.textContent = "Baixar imagem";
+          bi.addEventListener("click", function () { fontes().then(function () { desenhar(cv, i, p); cv.dataset.ok = "1"; baixar(cv, "system-barber-10k-imagem-dia-" + (i + 1) + ".png", aviso); }); }); row.appendChild(bi); }
+        inner.appendChild(pre); inner.appendChild(row); d.appendChild(s); d.appendChild(inner); L.appendChild(d);
+      });
+    }
+    Object.keys(CANAIS).forEach(function (k) {
+      var c = document.createElement("div"); c.className = "chip";
+      var inp = document.createElement("input"); inp.type = "radio"; inp.name = id + "-canal"; inp.id = id + "-canal-" + k; inp.value = k; inp.checked = k === canal;
+      var lb = document.createElement("label"); lb.htmlFor = inp.id; lb.textContent = CANAIS[k];
+      inp.addEventListener("change", function () { canal = k; save("sb10k_canal", k); bancos.forEach(function (b) { b.refresh(k); }); });
+      c.appendChild(inp); c.appendChild(lb); q("canais").appendChild(c);
     });
+    inicio = load(cfg.kInicio, "") || hojeISO();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(inicio)) inicio = hojeISO();
+    save(cfg.kInicio, inicio); q("inicio").value = inicio;
+    q("inicio").addEventListener("change", function () { var v = q("inicio").value; if (/^\d{4}-\d{2}-\d{2}$/.test(v)) { inicio = v; save(cfg.kInicio, v); atual = indiceHoje(); mostrar(); } });
+    q("hoje0").addEventListener("click", function () { inicio = hojeISO(); q("inicio").value = inicio; save(cfg.kInicio, inicio); atual = 0; mostrar(); aviso("Contagem reiniciada: hoje é o dia 1."); });
+    q("copiar").addEventListener("click", function () { copiar(textoDe(P, atual), aviso); });
+    q("ant").addEventListener("click", function () { atual = (atual + P.length - 1) % P.length; mostrar(); });
+    q("prox").addEventListener("click", function () { atual = (atual + 1) % P.length; mostrar(); });
+    if (cfg.imagens) q("baixar").addEventListener("click", function () { fontes().then(function () { desenhar(q("art"), atual, P[atual]); baixar(q("art"), "system-barber-10k-imagem-dia-" + (atual + 1) + ".png", aviso); }); });
+    atual = indiceHoje(); mostrar(); lista();
+    return {
+      refresh: function (k) { var r = el(id + "-canal-" + k); if (r) r.checked = true; mostrar(); lista(); },
+      show: function () { mostrar(); }
+    };
   }
 
-  // canais
-  Object.keys(CANAIS).forEach(function (k) {
-    var c = document.createElement("div"); c.className = "chip";
-    var i = document.createElement("input"); i.type = "radio"; i.name = "canal"; i.id = "canal-" + k; i.value = k; i.checked = k === canal;
-    var l = document.createElement("label"); l.htmlFor = i.id; l.textContent = CANAIS[k];
-    i.addEventListener("change", function () { canal = k; save("sb10k_canal", k); mostrarHoje(); montarLista(); });
-    c.appendChild(i); c.appendChild(l); el("canais").appendChild(c);
-  });
-  var cs = load("sb10k_canal", "instagram");
-  if (CANAIS[cs]) { canal = cs; var r = el("canal-" + cs); if (r) r.checked = true; }
+  bancos.push(criarBanco({ id: "b1", posts: POSTS1, imagens: false, titulo: "Post do dia", kFeitos: "sb10k_feitos", kInicio: "sb10k_inicio" }));
+  bancos.push(criarBanco({ id: "b2", posts: POSTS2, imagens: true, titulo: "Publicação do dia, com imagem", kFeitos: "sb10k_feitos_img", kInicio: "sb10k_inicio_img" }));
 
-  // data de início
-  inicio = load("sb10k_inicio", "") || hojeISO();
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(inicio)) inicio = hojeISO();
-  save("sb10k_inicio", inicio);
-  el("inicio").value = inicio;
-  el("inicio").addEventListener("change", function () {
-    if (/^\d{4}-\d{2}-\d{2}$/.test(el("inicio").value)) { inicio = el("inicio").value; save("sb10k_inicio", inicio); atual = indiceDeHoje(); mostrarHoje(); }
-  });
-  el("hoje0").addEventListener("click", function () { inicio = hojeISO(); el("inicio").value = inicio; save("sb10k_inicio", inicio); atual = 0; mostrarHoje(); aviso("Contagem reiniciada: hoje é o dia 1."); });
-
-  el("copiar").addEventListener("click", function () { copiar(textoDoDia(atual)); });
-  el("ant").addEventListener("click", function () { atual = (atual + POSTS.length - 1) % POSTS.length; mostrarHoje(); });
-  el("prox").addEventListener("click", function () { atual = (atual + 1) % POSTS.length; mostrarHoje(); });
-  el("sair").addEventListener("click", function () {
-    try { sessionStorage.removeItem("sb10k_motor"); } catch (e) {}
-    location.href = "system-barber-10k.html";
-  });
-
-  // menu lateral
+  /* ---------- Menu ---------- */
+  var SUBS = { b1: "Banco de 30 dias de posts prontos de divulgação. Veja o post do dia, copie o texto e publique ou agende.", b2: "30 publicações com imagem. Baixe a arte do dia, copie o texto e publique ou agende." };
   var mb = el("menuBtn"), mp = el("menuPanel");
   function menu(abrir) { mp.hidden = !abrir; mb.setAttribute("aria-expanded", abrir ? "true" : "false"); }
   mb.addEventListener("click", function (e) { e.stopPropagation(); menu(mp.hidden); });
   mp.addEventListener("click", function (e) { e.stopPropagation(); });
   document.addEventListener("click", function () { menu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") { menu(false); mb.focus(); } });
-  el("itemBanco").addEventListener("click", function () {
-    el("viewBanco").hidden = false; el("itemBanco").classList.add("on");
-    el("sub").textContent = "Banco de 30 dias de posts prontos de divulgação. Veja o post do dia, copie o texto e publique ou agende.";
-    menu(false); el("t-hoje").scrollIntoView({ behavior: "smooth", block: "start" });
+  Array.prototype.forEach.call(mp.querySelectorAll("[data-view]"), function (b) {
+    b.addEventListener("click", function () {
+      var v = b.getAttribute("data-view");
+      ["b1", "b2"].forEach(function (x) { el("view-" + x).hidden = x !== v; });
+      Array.prototype.forEach.call(mp.querySelectorAll("[data-view]"), function (o) { o.classList.toggle("on", o === b); });
+      el("sub").textContent = SUBS[v]; menu(false);
+      bancos[v === "b1" ? 0 : 1].show();
+      el("view-" + v).scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   });
-
-  atual = indiceDeHoje();
-  mostrarHoje();
-  montarLista();
+  el("sair").addEventListener("click", function () {
+    try { sessionStorage.removeItem("sb10k_motor"); } catch (e) {}
+    location.href = "system-barber-10k.html";
+  });
 })();
+
 </script>
 </body>
 </html>
