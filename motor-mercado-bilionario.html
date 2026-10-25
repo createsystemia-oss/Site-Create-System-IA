@@ -68,7 +68,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
 
   <section class="panel">
     <h2>Importar vários produtos de uma vez</h2>
-    <p class="note">Cole aqui os links de afiliado que a Shopee gerou (um por linha, quantos quiser, por exemplo 100) ou escolha um arquivo CSV. Se cada linha tiver o nome antes do link, o nome é aproveitado. O preço, escrito como R$ 49,90, também.</p>
+    <p class="note">Cole aqui os links de afiliado que a Shopee gerou (um por linha, quantos quiser, por exemplo 100) ou escolha um arquivo CSV. Se cada linha tiver o nome antes do link, o nome é aproveitado. O preço, escrito como R$ 49,90, também. Se a linha tiver também o link de uma imagem (terminado em .jpg, .png ou .webp), a foto do produto é aproveitada. No CSV, use uma coluna chamada imagem.</p>
     <div class="form">
       <div><label class="l" for="lojaL">Loja de todos os produtos</label><select id="lojaL"><option value="shopee">Shopee</option><option value="mercadolivre">Mercado Livre</option></select></div>
       <div><label class="l" for="catL">Categoria de todos os produtos</label><select id="catL"></select></div>
@@ -164,6 +164,8 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     return rows.filter(function (r) { return r.some(function (c) { return c.trim(); }); });
   }
   var URLRE = /https:\/\/[^\s"'<>,;|\t]+/;
+  var IMGRE = /\.(jpe?g|png|webp|gif)(\?|$)|susercontent|\/file\//i;
+  var URLG = /https:\/\/[^\s"'<>,;|\t]+/g;
   var PRECORE = /R\$\s?\d[\d.]*(?:,\d{1,2})?/;
   function limpaNome(t) { return t.replace(/[\t|;]+/g, " ").replace(/\s{2,}/g, " ").replace(/^[\s\-–—,:]+|[\s\-–—,:]+$/g, "").trim(); }
   function lerLote(texto) {
@@ -176,21 +178,23 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
       var d = prim.indexOf("\t") > -1 ? "\t" : (prim.split(";").length > prim.split(",").length ? ";" : ",");
       var rows = csv(texto, d), h = rows[0].map(function (x) { return x.trim().toLowerCase(); });
       var idx = function (re) { for (var i = 0; i < h.length; i++) if (re.test(h[i])) return i; return -1; };
-      var iN = idx(/^(nome|produto|t[ií]tulo|name|title)/), iL = idx(/(link|url)/), iP = idx(/(pre[cç]o|price|valor)/), iC = idx(/categoria/), iD = idx(/descri/);
+      var iN = idx(/^(nome|produto|t[ií]tulo|name|title)/), iL = idx(/(link|url)/), iP = idx(/(pre[cç]o|price|valor)/), iC = idx(/categoria/), iD = idx(/descri/), iI = idx(/(imagem|image|foto|img)/);
       rows.slice(1).forEach(function (r) {
-        var link = (r[iL] || "").trim();
-        if (!URLRE.test(link)) { for (var k = 0; k < r.length; k++) { var m = URLRE.exec(r[k] || ""); if (m) { link = m[0]; break; } } } else link = URLRE.exec(link)[0];
+        var link = iL > -1 && iL !== iI ? (r[iL] || "").trim() : "";
+        if (!URLRE.test(link)) { link = ""; for (var k = 0; k < r.length; k++) { if (k === iI) continue; var m = URLRE.exec(r[k] || ""); if (m && !IMGRE.test(m[0])) { link = m[0]; break; } } } else link = URLRE.exec(link)[0];
         if (!link) return;
+        var img = iI > -1 ? ((URLRE.exec(r[iI] || "") || [""])[0]) : "";
         var nome = iN > -1 ? (r[iN] || "").trim() : "";
-        out.push({ titulo: nome, link: link, preco: iP > -1 ? (r[iP] || "").trim() : "", categoria: iC > -1 ? (r[iC] || "").trim() : "", descricao: iD > -1 ? (r[iD] || "").trim() : "" });
+        out.push({ titulo: nome, imagem: img, link: link, preco: iP > -1 ? (r[iP] || "").trim() : "", categoria: iC > -1 ? (r[iC] || "").trim() : "", descricao: iD > -1 ? (r[iD] || "").trim() : "" });
       });
       return out;
     }
     linhas.forEach(function (l) {
-      var m = URLRE.exec(l); if (!m) return;
-      var resto = l.replace(m[0], " "), preco = "";
+      var us = l.match(URLG); if (!us) return;
+      var m = [us.filter(function (u) { return !IMGRE.test(u); })[0] || us[0]], img = us.filter(function (u) { return u !== m[0] && IMGRE.test(u); })[0] || "";
+      var resto = l; us.forEach(function (u) { resto = resto.replace(u, " "); }); var preco = "";
       var pm = PRECORE.exec(resto); if (pm) { preco = pm[0]; resto = resto.replace(pm[0], " "); }
-      out.push({ titulo: limpaNome(resto), link: m[0], preco: preco, categoria: "", descricao: "" });
+      out.push({ titulo: limpaNome(resto), imagem: img, link: m[0], preco: preco, categoria: "", descricao: "" });
     });
     return out;
   }
@@ -208,7 +212,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
       if (!https(it.link) || vistos[it.link]) { ign++; return; }
       vistos[it.link] = 1; n++;
       var cat = CATS.indexOf(it.categoria) > -1 ? it.categoria : el("catL").value;
-      novos.push({ id: base + n, titulo: (it.titulo || "Produto " + n).slice(0, 120), loja: el("lojaL").value, categoria: cat, link: it.link, imagem: "", preco: (it.preco || "").slice(0, 30), descricao: (it.descricao || "").slice(0, 300) });
+      novos.push({ id: base + n, titulo: (it.titulo || "Produto " + n).slice(0, 120), loja: el("lojaL").value, categoria: cat, link: it.link, imagem: https(it.imagem || "") ? it.imagem : "", preco: (it.preco || "").slice(0, 30), descricao: (it.descricao || "").slice(0, 300) });
     });
     if (!novos.length) { msgL("Nada novo para importar: " + ign + " ignorado(s) (links repetidos ou inválidos)."); return; }
     dados = novos.concat(dados); sujo = true; guardar(); lista();
