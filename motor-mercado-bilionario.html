@@ -130,7 +130,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   el("cancelar").addEventListener("click", sair);
   el("f").addEventListener("submit", function (e) {
     e.preventDefault();
-    var o = { id: editando !== null ? dados[editando].id : Date.now(), titulo: el("titulo").value.trim(), loja: el("loja").value, categoria: el("categoria").value, link: el("link").value.trim(), imagem: el("imagem").value.trim(), preco: el("preco").value.trim(), descricao: el("descricao").value.trim() };
+    var o = { id: editando !== null ? dados[editando].id : Date.now(), icone: editando !== null ? (dados[editando].icone || "") : "", titulo: el("titulo").value.trim(), loja: el("loja").value, categoria: el("categoria").value, link: el("link").value.trim(), imagem: el("imagem").value.trim(), preco: el("preco").value.trim(), descricao: el("descricao").value.trim() };
     if (!o.titulo) { aviso("Informe o nome do produto."); return; }
     if (!https(o.link)) { aviso("O link do produto precisa começar com https://"); return; }
     if (o.imagem && !https(o.imagem)) { aviso("O link da imagem precisa começar com https://"); return; }
@@ -163,6 +163,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     row.push(cur); rows.push(row);
     return rows.filter(function (r) { return r.some(function (c) { return c.trim(); }); });
   }
+  var MAPA = {"health": ["Saúde", "Beleza e cuidados", "🩺"], "fashion accessories": ["Acessórios de Moda", "Moda", "💍"], "home appliances": ["Eletrodomésticos", "Casa e cozinha", "🏠"], "men clothes": ["Roupas Masculinas", "Moda", "👕"], "men shoes": ["Calçados Masculinos", "Moda", "👟"], "mobile & gadgets": ["Celulares e Gadgets", "Celulares e acessórios", "📱"], "travel & luggage": ["Viagem e Malas", "Outros", "🧳"], "women bags": ["Bolsas Femininas", "Moda", "👜"], "women clothes": ["Roupas Femininas", "Moda", "👗"], "food delivery": ["Delivery de Comida", "Outros", "🍔"], "women shoes": ["Calçados Femininos", "Moda", "👠"], "men bags": ["Bolsas Masculinas", "Moda", "🎒"], "watches": ["Relógios", "Moda", "⌚"], "audio": ["Áudio", "Eletrônicos", "🎧"], "food & beverages": ["Alimentos e Bebidas", "Outros", "🛒"], "beauty": ["Beleza", "Beleza e cuidados", "💄"], "pets": ["Pet", "Pet", "🐾"], "mom & baby": ["Mamãe e Bebê", "Bebês", "🍼"], "baby & kids fashion": ["Moda Infantil", "Bebês", "🧸"], "gaming & consoles": ["Games e Consoles", "Eletrônicos", "🎮"]};
   var URLRE = /https:\/\/[^\s"'<>,;|\t]+/;
   var IMGRE = /\.(jpe?g|png|webp|gif)(\?|$)|susercontent|\/file\//i;
   var URLG = /https:\/\/[^\s"'<>,;|\t]+/g;
@@ -178,14 +179,15 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
       var d = prim.indexOf("\t") > -1 ? "\t" : (prim.split(";").length > prim.split(",").length ? ";" : ",");
       var rows = csv(texto, d), h = rows[0].map(function (x) { return x.trim().toLowerCase(); });
       var idx = function (re) { for (var i = 0; i < h.length; i++) if (re.test(h[i])) return i; return -1; };
-      var iN = idx(/^(nome|produto|t[ií]tulo|name|title)/), iL = idx(/(link|url)/), iP = idx(/(pre[cç]o|price|valor)/), iC = idx(/categoria/), iD = idx(/descri/), iI = idx(/(imagem|image|foto|img)/);
+      var iN = idx(/^(nome|produto|t[ií]tulo|name|title|offer name)/), iL = idx(/(link|url)/), iP = idx(/(pre[cç]o|price|valor)/), iC = idx(/categoria/), iD = idx(/descri/), iI = idx(/(imagem|image|foto|img)/);
       rows.slice(1).forEach(function (r) {
         var link = iL > -1 && iL !== iI ? (r[iL] || "").trim() : "";
         if (!URLRE.test(link)) { link = ""; for (var k = 0; k < r.length; k++) { if (k === iI) continue; var m = URLRE.exec(r[k] || ""); if (m && !IMGRE.test(m[0])) { link = m[0]; break; } } } else link = URLRE.exec(link)[0];
         if (!link) return;
         var img = iI > -1 ? ((URLRE.exec(r[iI] || "") || [""])[0]) : "";
-        var nome = iN > -1 ? (r[iN] || "").trim() : "";
-        out.push({ titulo: nome, imagem: img, link: link, preco: iP > -1 ? (r[iP] || "").trim() : "", categoria: iC > -1 ? (r[iC] || "").trim() : "", descricao: iD > -1 ? (r[iD] || "").trim() : "" });
+        var nome = iN > -1 ? (r[iN] || "").replace(/^[-\s]+/, "").trim() : "", mp = MAPA[nome.toLowerCase()], icone = "", catM = "";
+        if (mp) { nome = mp[0]; catM = mp[1]; icone = mp[2]; }
+        out.push({ titulo: nome, icone: icone, catM: catM, imagem: img, link: link, preco: iP > -1 ? (r[iP] || "").trim() : "", categoria: iC > -1 ? (r[iC] || "").trim() : (catM || ""), descricao: iD > -1 ? (r[iD] || "").trim() : (mp ? "Veja as ofertas da categoria " + nome + " na Shopee." : "") });
       });
       return out;
     }
@@ -212,7 +214,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
       if (!https(it.link) || vistos[it.link]) { ign++; return; }
       vistos[it.link] = 1; n++;
       var cat = CATS.indexOf(it.categoria) > -1 ? it.categoria : el("catL").value;
-      novos.push({ id: base + n, titulo: (it.titulo || "Produto " + n).slice(0, 120), loja: el("lojaL").value, categoria: cat, link: it.link, imagem: https(it.imagem || "") ? it.imagem : "", preco: (it.preco || "").slice(0, 30), descricao: (it.descricao || "").slice(0, 300) });
+      novos.push({ id: base + n, titulo: (it.titulo || "Produto " + n).slice(0, 120), loja: el("lojaL").value, categoria: cat, link: it.link, imagem: https(it.imagem || "") ? it.imagem : "", icone: it.icone || "", preco: (it.preco || "").slice(0, 30), descricao: (it.descricao || "").slice(0, 300) });
     });
     if (!novos.length) { msgL("Nada novo para importar: " + ign + " ignorado(s) (links repetidos ou inválidos)."); return; }
     dados = novos.concat(dados); sujo = true; guardar(); lista();

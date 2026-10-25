@@ -1,202 +1,222 @@
 [
   {
     "id": 1792959715079,
-    "titulo": "Produto 1",
+    "titulo": "Saúde",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Beleza e cuidados",
     "link": "https://s.shopee.com.br/1Lgp63XYNz",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Saúde na Shopee.",
+    "icone": "🩺"
   },
   {
     "id": 1792959715080,
-    "titulo": "Produto 2",
+    "titulo": "Acessórios de Moda",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/8fTPpX5dVQ",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Acessórios de Moda na Shopee.",
+    "icone": "💍"
   },
   {
     "id": 1792959715081,
-    "titulo": "Produto 3",
+    "titulo": "Eletrodomésticos",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Casa e cozinha",
     "link": "https://s.shopee.com.br/8pmq1q50AT",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Eletrodomésticos na Shopee.",
+    "icone": "🏠"
   },
   {
     "id": 1792959715082,
-    "titulo": "Produto 4",
+    "titulo": "Roupas Masculinas",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/906GE94MpW",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Roupas Masculinas na Shopee.",
+    "icone": "👕"
   },
   {
     "id": 1792959715083,
-    "titulo": "Produto 5",
+    "titulo": "Calçados Masculinos",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/9APgQS3jUZ",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Calçados Masculinos na Shopee.",
+    "icone": "👟"
   },
   {
     "id": 1792959715084,
-    "titulo": "Produto 6",
+    "titulo": "Celulares e Gadgets",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Celulares e acessórios",
     "link": "https://s.shopee.com.br/80Dj2J8ArM",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Celulares e Gadgets na Shopee.",
+    "icone": "📱"
   },
   {
     "id": 1792959715085,
-    "titulo": "Produto 7",
+    "titulo": "Viagem e Malas",
     "loja": "shopee",
     "categoria": "Outros",
     "link": "https://s.shopee.com.br/8AX9Ec7XWP",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Viagem e Malas na Shopee.",
+    "icone": "🧳"
   },
   {
     "id": 1792959715086,
-    "titulo": "Produto 8",
+    "titulo": "Bolsas Femininas",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/8KqZQv6uBS",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Bolsas Femininas na Shopee.",
+    "icone": "👜"
   },
   {
     "id": 1792959715087,
-    "titulo": "Produto 9",
+    "titulo": "Roupas Femininas",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/8V9zdE6GqV",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Roupas Femininas na Shopee.",
+    "icone": "👗"
   },
   {
     "id": 1792959715088,
-    "titulo": "Produto 10",
+    "titulo": "Delivery de Comida",
     "loja": "shopee",
     "categoria": "Outros",
     "link": "https://s.shopee.com.br/9zynPz0Yno",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Delivery de Comida na Shopee.",
+    "icone": "🍔"
   },
   {
     "id": 1792959715089,
-    "titulo": "Produto 11",
+    "titulo": "Calçados Femininos",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/AAIDcHzvSr",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Calçados Femininos na Shopee.",
+    "icone": "👠"
   },
   {
     "id": 1792959715090,
-    "titulo": "Produto 12",
+    "titulo": "Bolsas Masculinas",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/AKbdoazI7u",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Bolsas Masculinas na Shopee.",
+    "icone": "🎒"
   },
   {
     "id": 1792959715091,
-    "titulo": "Produto 13",
+    "titulo": "Relógios",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Moda",
     "link": "https://s.shopee.com.br/AUv40tyemx",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Relógios na Shopee.",
+    "icone": "⌚"
   },
   {
     "id": 1792959715092,
-    "titulo": "Produto 14",
+    "titulo": "Áudio",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Eletrônicos",
     "link": "https://s.shopee.com.br/9Kj6cl369k",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Áudio na Shopee.",
+    "icone": "🎧"
   },
   {
     "id": 1792959715093,
-    "titulo": "Produto 15",
+    "titulo": "Alimentos e Bebidas",
     "loja": "shopee",
     "categoria": "Outros",
     "link": "https://s.shopee.com.br/9V2Wp42Son",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Alimentos e Bebidas na Shopee.",
+    "icone": "🛒"
   },
   {
     "id": 1792959715094,
-    "titulo": "Produto 16",
+    "titulo": "Beleza",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Beleza e cuidados",
     "link": "https://s.shopee.com.br/9fLx1N1pTq",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Beleza na Shopee.",
+    "icone": "💄"
   },
   {
     "id": 1792959715095,
-    "titulo": "Produto 17",
+    "titulo": "Pet",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Pet",
     "link": "https://s.shopee.com.br/9pfNDg1C8t",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Pet na Shopee.",
+    "icone": "🐾"
   },
   {
     "id": 1792959715096,
-    "titulo": "Produto 18",
+    "titulo": "Mamãe e Bebê",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Bebês",
     "link": "https://s.shopee.com.br/60SeedFmvA",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Mamãe e Bebê na Shopee.",
+    "icone": "🍼"
   },
   {
     "id": 1792959715097,
-    "titulo": "Produto 19",
+    "titulo": "Moda Infantil",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Bebês",
     "link": "https://s.shopee.com.br/6Am4qwF9aD",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Moda Infantil na Shopee.",
+    "icone": "🧸"
   },
   {
     "id": 1792959715098,
-    "titulo": "Produto 20",
+    "titulo": "Games e Consoles",
     "loja": "shopee",
-    "categoria": "Outros",
+    "categoria": "Eletrônicos",
     "link": "https://s.shopee.com.br/6L5V3FEWFG",
     "imagem": "",
     "preco": "",
-    "descricao": ""
+    "descricao": "Veja as ofertas da categoria Games e Consoles na Shopee.",
+    "icone": "🎮"
   }
 ]
