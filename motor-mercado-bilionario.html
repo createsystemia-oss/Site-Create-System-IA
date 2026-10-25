@@ -83,7 +83,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   <section class="panel">
     <h2>Produtos cadastrados (<span id="n">0</span>)</h2>
     <p class="warn" id="aviso" hidden>Você tem alterações que ainda não estão no site. Baixe o arquivo produtos.json e envie ao GitHub.</p>
-    <div class="row"><button class="btn green" type="button" id="baixar">Baixar produtos.json</button><button class="btn ghost" type="button" id="recarregar">Recarregar o que está no site</button></div>
+    <div class="row"><button class="btn green" type="button" id="baixar">Baixar produtos.json</button><button class="btn ghost" type="button" id="recarregar">Recarregar o que está no site</button><button class="btn danger" type="button" id="apagarTodos">Excluir todos os produtos</button></div>
     <div class="list" id="lista"></div>
   </section>
 
@@ -167,6 +167,11 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   function doSite() {
     return fetch("produtos.json?v=" + Date.now(), { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { return Array.isArray(d) ? d : []; }).catch(function () { return []; });
   }
+  el("apagarTodos").addEventListener("click", function () {
+    if (!dados.length) { aviso("Não há produtos para excluir."); return; }
+    if (!confirm("Excluir TODOS os " + dados.length + " produtos da lista? Depois você precisa baixar o produtos.json e enviar ao GitHub para valer no site.")) return;
+    dados = []; sujo = true; guardar(); sair(); lista(); aviso("Lista zerada. Cadastre os novos produtos e depois baixe o produtos.json.");
+  });
   el("recarregar").addEventListener("click", function () {
     if (sujo && !confirm("Isso descarta as alterações que ainda não foram publicadas. Continuar?")) return;
     doSite().then(function (d) { dados = d; sujo = false; guardar(); sair(); lista(); aviso("Carregado o que está no site."); });
