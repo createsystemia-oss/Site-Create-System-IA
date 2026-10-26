@@ -51,6 +51,11 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   <div class="bar"><a href="mercado-bilionario.html">← Voltar à Vitrine de Ofertas</a><button type="button" id="sair">Sair do motor</button></div>
   <header class="head"><p class="kicker">Motor do Mercado Bilionário</p><h1>Painel Mercado Bilionário</h1><p class="sub">Cadastre os produtos da vitrine com o seu link de afiliado. Depois baixe o arquivo e envie ao GitHub.</p></header>
 
+  <div class="chips" id="abas" role="group" aria-label="Seções do motor">
+    <button type="button" class="chip" data-aba="prod" aria-pressed="true">Produtos</button>
+    <button type="button" class="chip" data-aba="posts" aria-pressed="false">Banco de 30 dias de posts</button>
+  </div>
+  <div id="aba-prod" style="display:flex;flex-direction:column;gap:20px">
   <section class="panel">
     <h2 id="tf">Adicionar produto</h2>
     <form class="form" id="f" autocomplete="off">
@@ -91,6 +96,8 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     <h2>Como publicar as mudanças</h2>
     <ol class="steps"><li>Clique em <b>Baixar produtos.json</b>.</li><li>No GitHub, clique em <b>Add file &gt; Upload files</b> e envie o arquivo <b>produtos.json</b> com esse nome exato.</li><li>Clique em <b>Commit changes</b>, espere cerca de 1 minuto e abra a vitrine com Ctrl+F5.</li></ol>
   </section>
+  </div>
+  <div id="aba-posts" hidden style="flex-direction:column;gap:20px"></div>
 </main>
 <script>
 (function () {
@@ -247,6 +254,103 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     dados = novos.concat(dados); sujo = true; guardar(); lista();
     el("lote").value = ""; el("arq").value = "";
     msgL(novos.length + " produto(s) importado(s)" + (ign ? ", " + ign + " ignorado(s)" : "") + ". Agora baixe o produtos.json e envie ao GitHub.");
+  });
+
+  /* ---------- Banco de posts ---------- */
+  var SITE = "www.createsystemia.com.br/mercado-bilionario.html";
+  var POSTS = [
+    ["Apresentação", "Conheça a vitrine", "Conheça o Mercado Bilionário, a vitrine com ofertas selecionadas da Shopee e do Mercado Livre.\n\nVocê escolhe o produto, toca no botão e finaliza a compra no site da própria loja."],
+    ["Como funciona", "Como comprar", "Como funciona o Mercado Bilionário:\n\n1. Veja os produtos da vitrine\n2. Toque em Ver na Shopee ou Ver no Mercado Livre\n3. Finalize a compra na própria loja\n\nPagamento, entrega e atendimento são da loja."],
+    ["Dica", "Leia as avaliações", "Dica de compra: antes de comprar, leia as avaliações de quem já recebeu o produto.\n\nOlhe as fotos dos compradores e os comentários mais recentes."],
+    ["Pergunta", "Que produto você quer ver?", "Que tipo de produto você gostaria de ver na vitrine?\n\nConta aqui nos comentários. Eu procuro opções e coloco no Mercado Bilionário."],
+    ["Dica", "Confira o vendedor", "Dica: confira a reputação do vendedor antes de comprar.\n\nTanto na Shopee quanto no Mercado Livre dá para ver a avaliação da loja na página do produto."],
+    ["Dica", "Compare o frete", "Dica: compare o valor do frete e o prazo de entrega antes de fechar a compra.\n\nO produto pode parecer barato, mas o frete e o prazo mudam a conta."],
+    ["Transparência", "Como funciona o link", "Transparência: os links da vitrine Mercado Bilionário são de afiliado.\n\nSe você comprar por eles, posso receber uma comissão, sem custo adicional para você."],
+    ["Dica", "Leia a descrição completa", "Dica: leia a descrição completa do produto, e não só o título.\n\nMaterial, medidas, o que vem na caixa e voltagem fazem diferença."],
+    ["Chamada", "Visite a vitrine", "Já visitou a vitrine do Mercado Bilionário?\n\nOfertas selecionadas da Shopee e do Mercado Livre em um só lugar. Dá uma olhada e escolhe o seu."],
+    ["Dica", "Veja se tem cupom", "Dica: antes de pagar, confira se existe cupom disponível na página do produto ou no carrinho.\n\nVale olhar em cada loja."],
+    ["Categoria", "Casa e cozinha", "Quer organizar ou renovar a casa?\n\nNa vitrine Mercado Bilionário tem a categoria Casa e cozinha, com ofertas selecionadas. Confira os valores atuais na loja."],
+    ["Categoria", "Beleza e cuidados", "Beleza e cuidados na vitrine Mercado Bilionário.\n\nAcesse, veja os produtos selecionados e finalize a compra com segurança no site da loja."],
+    ["Categoria", "Moda", "Procurando uma peça nova?\n\nA categoria Moda da vitrine Mercado Bilionário reúne ofertas selecionadas. Confira as medidas e a tabela de tamanhos antes de comprar."],
+    ["Categoria", "Pet", "Para quem tem pet em casa: a vitrine Mercado Bilionário tem a categoria Pet.\n\nVeja os produtos selecionados e confira os detalhes na loja."],
+    ["Categoria", "Eletrônicos", "Eletrônicos e acessórios na vitrine Mercado Bilionário.\n\nConfira as ofertas selecionadas e leia a descrição para saber o que vem junto com o produto."],
+    ["Dica", "Desconfie de preço absurdo", "Dica de segurança: desconfie de preço muito abaixo do normal.\n\nCompare com outras lojas e veja as avaliações antes de comprar."],
+    ["Pergunta", "Shopee ou Mercado Livre?", "Qual você mais usa para comprar: Shopee ou Mercado Livre?\n\nConta aqui. A vitrine Mercado Bilionário reúne ofertas das duas."],
+    ["Dica", "Veja a política de devolução", "Dica: antes de comprar, veja a política de troca e devolução da loja.\n\nÉ bom saber o prazo e as condições caso o produto não sirva."],
+    ["Chamada", "Salve a vitrine", "Salve a vitrine Mercado Bilionário nos seus favoritos.\n\nAssim fica fácil voltar e conferir as ofertas selecionadas sempre que precisar."],
+    ["Dica", "Fotos dos compradores", "Dica: as fotos que os compradores colocam nas avaliações mostram o produto de verdade.\n\nDê uma olhada antes de decidir."],
+    ["Dica", "Pague pela plataforma", "Dica de segurança: finalize e pague sempre dentro da Shopee ou do Mercado Livre.\n\nEvite combinar pagamento por fora com vendedores."],
+    ["Pergunta", "Qual categoria você quer?", "Qual categoria você gostaria de ver mais na vitrine: casa, moda, beleza, pet ou eletrônicos?\n\nVota nos comentários."],
+    ["Dica", "Presente? Veja o prazo", "Vai comprar um presente? Confira o prazo de entrega antes de pagar.\n\nAssim o presente chega a tempo."],
+    ["Dica", "Escolha o tamanho certo", "Dica para comprar roupa e calçado online: confira a tabela de medidas e compare com uma peça que você já tem.\n\nIsso evita trocas."],
+    ["Transparência", "Compra com segurança", "A compra pela vitrine Mercado Bilionário é feita no site da Shopee ou do Mercado Livre.\n\nPagamento, entrega, troca e atendimento são da própria loja."],
+    ["Chamada", "Mande para um amigo", "Conhece alguém procurando um produto?\n\nMande a vitrine Mercado Bilionário para essa pessoa. Ofertas selecionadas da Shopee e do Mercado Livre em um só lugar."],
+    ["Dica", "Acompanhe o pedido", "Dica: depois de comprar, acompanhe o pedido pelo aplicativo da loja.\n\nVocê vê o status e o prazo de entrega em tempo real."],
+    ["Pergunta", "O que você comprou recentemente?", "O que você comprou online recentemente e valeu a pena?\n\nConta aqui. Pode ser a próxima ideia para a vitrine Mercado Bilionário."],
+    ["Chamada", "Fique de olho", "A vitrine Mercado Bilionário recebe novos produtos selecionados.\n\nVolte de vez em quando, dá uma olhada e escolha com calma."],
+    ["Resumo", "Fechando o ciclo", "Recapitulando o Mercado Bilionário:\n\nOfertas selecionadas da Shopee e do Mercado Livre em uma vitrine. Você escolhe, clica e finaliza a compra no site da loja, com pagamento e entrega pela própria plataforma."]
+  ];
+  var TAGS = ["#ofertas #shopee #mercadolivre #achadinhos", "#compraronline #promocao #mercadobilionario #dicasdecompra", "#shopee #mercadolivre #ofertasdodia #mercadobilionario"];
+  var CANAIS = { instagram: "Instagram", facebook: "Facebook", whatsapp: "WhatsApp (Status ou grupos)" };
+  var cnl = "instagram", dia = 0, feitosP = {}, iniP;
+  try { cnl = localStorage.getItem("mb_canal") || "instagram"; if (!CANAIS[cnl]) cnl = "instagram"; } catch (e) {}
+  try { feitosP = JSON.parse(localStorage.getItem("mb_feitos") || "{}") || {}; } catch (e) { feitosP = {}; }
+  function saveP(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function hojeISO() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function diaDeHoje() { var a = iniP.split("-").map(Number), t = new Date(), n = Math.round((Date.UTC(t.getFullYear(), t.getMonth(), t.getDate()) - Date.UTC(a[0], a[1] - 1, a[2])) / 86400000); return n < 0 ? 0 : n % POSTS.length; }
+  function textoP(i) {
+    var cta = cnl === "instagram" ? "Link na bio." : "Veja a vitrine: https://" + SITE;
+    var t = POSTS[i][2] + "\n\n" + cta + "\nLink de afiliado: posso receber comissão, sem custo adicional para você.";
+    if (cnl !== "whatsapp") t += "\n\n" + TAGS[i % TAGS.length];
+    return t;
+  }
+  var A = el("aba-posts");
+  A.style.flexDirection = "column"; A.style.gap = "20px";
+  A.innerHTML = '<section class="panel"><h2>Post do dia</h2><p class="note">Textos prontos para divulgar a vitrine. Copie, cole no Instagram, Facebook ou WhatsApp, ou agende no Meta Business Suite.</p>' +
+    '<div><label class="l">Canal</label><div class="chips" id="p-canais"></div></div>' +
+    '<div class="row"><label class="l" for="p-ini" style="margin:0">Começou a divulgar em</label><input type="date" id="p-ini" style="width:auto"><button class="btn ghost" type="button" id="p-hoje">Começar hoje</button></div>' +
+    '<p style="font:800 2rem var(--font-display);color:var(--blue)" id="p-dia"></p><p class="note" id="p-tema"></p>' +
+    '<pre id="p-texto" style="margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.65;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px"></pre>' +
+    '<div class="row"><button class="btn" type="button" id="p-copiar">Copiar texto</button><a class="btn green" id="p-zap" target="_blank" rel="noopener" href="#">Abrir no WhatsApp</a><button class="btn ghost" type="button" id="p-ant">← Dia anterior</button><button class="btn ghost" type="button" id="p-prox">Próximo dia →</button></div><p class="msg" id="p-msg" role="status"></p></section>' +
+    '<section class="panel"><h2>Todos os 30 dias</h2><p class="note">Abra um dia para ver o texto. Marque os dias que já publicou ou agendou; a marcação fica salva só neste navegador.</p><div class="list" id="p-lista"></div></section>';
+  function avisoP(t) { var m = el("p-msg"); m.textContent = t; clearTimeout(avisoP.t); avisoP.t = setTimeout(function () { m.textContent = ""; }, 2600); }
+  function mostrarP() {
+    el("p-dia").textContent = "Dia " + (dia + 1) + " de " + POSTS.length; el("p-tema").textContent = POSTS[dia][0] + " · " + POSTS[dia][1];
+    var t = textoP(dia); el("p-texto").textContent = t; el("p-zap").href = "https://wa.me/?text=" + encodeURIComponent(t); el("p-zap").hidden = cnl !== "whatsapp";
+  }
+  function listaP() {
+    var L = el("p-lista"); L.textContent = "";
+    POSTS.forEach(function (p, i) {
+      var d = document.createElement("details"); d.className = "item";
+      var s = document.createElement("summary"); s.style.cssText = "cursor:pointer;display:flex;gap:10px;align-items:center";
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!feitosP[i]; cb.setAttribute("aria-label", "Marcar dia " + (i + 1) + " como agendado");
+      cb.addEventListener("click", function (e) { e.stopPropagation(); });
+      cb.addEventListener("change", function () { feitosP[i] = cb.checked; saveP("mb_feitos", JSON.stringify(feitosP)); });
+      var t = document.createElement("span"); t.className = "t"; t.textContent = "Dia " + (i + 1) + " · " + p[0] + " · " + p[1];
+      s.appendChild(cb); s.appendChild(t);
+      var pre = document.createElement("pre"); pre.style.cssText = "margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.6"; pre.textContent = textoP(i);
+      var b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "Copiar texto"; b.addEventListener("click", function () { copiar(textoP(i)); });
+      d.appendChild(s); d.appendChild(pre); d.appendChild(b); L.appendChild(d);
+    });
+  }
+  Object.keys(CANAIS).forEach(function (k) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = CANAIS[k]; b.setAttribute("aria-pressed", String(k === cnl)); b.dataset.c = k;
+    b.addEventListener("click", function () { cnl = k; saveP("mb_canal", k); Array.prototype.forEach.call(el("p-canais").children, function (x) { x.setAttribute("aria-pressed", String(x.dataset.c === k)); }); mostrarP(); listaP(); });
+    el("p-canais").appendChild(b);
+  });
+  try { iniP = localStorage.getItem("mb_inicio") || ""; } catch (e) { iniP = ""; }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iniP)) iniP = hojeISO(); saveP("mb_inicio", iniP); el("p-ini").value = iniP;
+  el("p-ini").addEventListener("change", function () { var v = el("p-ini").value; if (/^\d{4}-\d{2}-\d{2}$/.test(v)) { iniP = v; saveP("mb_inicio", v); dia = diaDeHoje(); mostrarP(); } });
+  el("p-hoje").addEventListener("click", function () { iniP = hojeISO(); el("p-ini").value = iniP; saveP("mb_inicio", iniP); dia = 0; mostrarP(); avisoP("Contagem reiniciada: hoje é o dia 1."); });
+  el("p-copiar").addEventListener("click", function () { copiar(textoP(dia)); });
+  el("p-ant").addEventListener("click", function () { dia = (dia + POSTS.length - 1) % POSTS.length; mostrarP(); });
+  el("p-prox").addEventListener("click", function () { dia = (dia + 1) % POSTS.length; mostrarP(); });
+  dia = diaDeHoje(); mostrarP(); listaP();
+  Array.prototype.forEach.call(el("abas").children, function (b) {
+    b.addEventListener("click", function () {
+      var a = b.dataset.aba; el("aba-prod").hidden = a !== "prod"; el("aba-posts").hidden = a !== "posts"; el("aba-posts").style.display = a === "posts" ? "flex" : "none"; el("aba-prod").style.display = a === "prod" ? "flex" : "none";
+      Array.prototype.forEach.call(el("abas").children, function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    });
   });
   el("sair").addEventListener("click", function () { try { sessionStorage.removeItem("mb_motor"); } catch (e) {} location.href = "mercado-bilionario.html"; });
   var salvo = null, s = false; try { salvo = JSON.parse(localStorage.getItem(KEY) || "null"); s = !!localStorage.getItem(KEY + "_sujo"); } catch (e) {}
