@@ -304,12 +304,52 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
     if (cnl !== "whatsapp") t += "\n\n" + TAGS[i % TAGS.length];
     return t;
   }
+
+  /* ---------- Artes (imagem 1080x1080 gerada no navegador) ---------- */
+  var PAL = [
+    { b1: "#0b1f3a", b2: "#14408f", acc: "#34d399", txt: "#ffffff", sub: "#a9c4ff", pill: "#0b1f3a" },
+    { b1: "#06553b", b2: "#0b3b5c", acc: "#9bf0cb", txt: "#ffffff", sub: "#bfe8d6", pill: "#06553b" },
+    { b1: "#f2f6fb", b2: "#d6e4ff", acc: "#12a874", txt: "#0b1f3a", sub: "#1556e0", pill: "#ffffff" },
+    { b1: "#1556e0", b2: "#0b1f3a", acc: "#6ee7b7", txt: "#ffffff", sub: "#cfe0ff", pill: "#0b1f3a" }
+  ];
+  function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  function icone(c, t, cx, cy, r) {
+    c.save(); c.translate(cx, cy); c.lineCap = "round"; c.lineJoin = "round"; c.lineWidth = 14;
+    if (t === 0) { rr(c, -0.8 * r, -0.4 * r, 1.6 * r, 1.25 * r, 0.14 * r); c.stroke(); c.beginPath(); c.arc(0, -0.4 * r, 0.45 * r, Math.PI, 0); c.stroke(); }
+    else if (t === 1) { c.beginPath(); c.moveTo(-0.9 * r, 0); c.lineTo(-0.2 * r, -0.8 * r); c.lineTo(0.85 * r, -0.8 * r); c.lineTo(0.85 * r, 0.1 * r); c.lineTo(0.05 * r, 0.9 * r); c.closePath(); c.stroke(); c.beginPath(); c.arc(0.4 * r, -0.4 * r, 0.08 * r, 0, 7); c.fill(); }
+    else if (t === 2) { c.beginPath(); c.moveTo(-1 * r, -0.8 * r); c.lineTo(-0.7 * r, -0.8 * r); c.lineTo(-0.35 * r, 0.4 * r); c.lineTo(0.7 * r, 0.4 * r); c.lineTo(0.95 * r, -0.4 * r); c.lineTo(-0.6 * r, -0.4 * r); c.stroke(); c.beginPath(); c.arc(-0.2 * r, 0.8 * r, 0.1 * r, 0, 7); c.arc(0.5 * r, 0.8 * r, 0.1 * r, 0, 7); c.fill(); }
+    else if (t === 3) { rr(c, -1 * r, -0.55 * r, 1.25 * r, 0.9 * r, 0.1 * r); c.stroke(); c.beginPath(); c.moveTo(0.25 * r, -0.2 * r); c.lineTo(0.7 * r, -0.2 * r); c.lineTo(1 * r, 0.1 * r); c.lineTo(1 * r, 0.35 * r); c.lineTo(0.25 * r, 0.35 * r); c.stroke(); c.beginPath(); c.arc(-0.5 * r, 0.55 * r, 0.18 * r, 0, 7); c.arc(0.6 * r, 0.55 * r, 0.18 * r, 0, 7); c.stroke(); }
+    else if (t === 4) { c.beginPath(); c.moveTo(0, -0.95 * r); c.lineTo(0.8 * r, -0.6 * r); c.lineTo(0.8 * r, 0.1 * r); c.quadraticCurveTo(0.8 * r, 0.7 * r, 0, 0.95 * r); c.quadraticCurveTo(-0.8 * r, 0.7 * r, -0.8 * r, 0.1 * r); c.lineTo(-0.8 * r, -0.6 * r); c.closePath(); c.stroke(); c.beginPath(); c.moveTo(-0.35 * r, 0); c.lineTo(-0.05 * r, 0.3 * r); c.lineTo(0.4 * r, -0.25 * r); c.stroke(); }
+    else if (t === 5) { c.beginPath(); for (var k = 0; k < 10; k++) { var a = -Math.PI / 2 + k * Math.PI / 5, rad = k % 2 ? 0.42 * r : 0.95 * r; c.lineTo(Math.cos(a) * rad, Math.sin(a) * rad); } c.closePath(); c.stroke(); }
+    else if (t === 6) { c.beginPath(); c.moveTo(0, 0.85 * r); c.bezierCurveTo(-1.2 * r, 0, -0.8 * r, -0.9 * r, 0, -0.35 * r); c.bezierCurveTo(0.8 * r, -0.9 * r, 1.2 * r, 0, 0, 0.85 * r); c.closePath(); c.stroke(); }
+    else { c.beginPath(); c.arc(-0.15 * r, -0.15 * r, 0.6 * r, 0, 7); c.stroke(); c.beginPath(); c.moveTo(0.3 * r, 0.3 * r); c.lineTo(0.9 * r, 0.9 * r); c.stroke(); }
+    c.restore();
+  }
+  function quebrar(c, texto, maxW) { var pal = texto.split(" "), L = [], l = ""; pal.forEach(function (w) { var t = l ? l + " " + w : w; if (c.measureText(t).width > maxW && l) { L.push(l); l = w; } else l = t; }); if (l) L.push(l); return L; }
+  function desenhar(cv, i, post) {
+    var S = 1080, c = cv.getContext("2d"); cv.width = S; cv.height = S;
+    var p = PAL[i % PAL.length], g = c.createLinearGradient(0, 0, S, S); g.addColorStop(0, p.b1); g.addColorStop(1, p.b2); c.fillStyle = g; c.fillRect(0, 0, S, S);
+    c.strokeStyle = p.sub; c.globalAlpha = 0.12; c.lineWidth = 2;
+    for (var k = 0; k <= S; k += 54) { c.beginPath(); c.moveTo(k, 0); c.lineTo(k, S); c.stroke(); c.beginPath(); c.moveTo(0, k); c.lineTo(S, k); c.stroke(); }
+    c.globalAlpha = 1; c.fillStyle = p.acc; rr(c, 72, 72, 110, 12, 6); c.fill();
+    c.fillStyle = p.sub; c.font = "500 30px 'JetBrains Mono', ui-monospace, monospace"; c.textBaseline = "alphabetic"; c.fillText(("DIA " + (i + 1) + "  ·  " + post[0]).toUpperCase(), 72, 138);
+    var fam = "'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif", fs = 104, L; c.fillStyle = p.txt;
+    for (; fs >= 64; fs -= 8) { c.font = "800 " + fs + "px " + fam; L = quebrar(c, post[1], 900); if (L.length <= 4) break; }
+    var y = 270 + fs * 0.9; L.forEach(function (ln, j) { c.fillText(ln, 72, y + j * fs * 1.08); });
+    c.strokeStyle = p.acc; c.fillStyle = p.acc; icone(c, i % 8, 800, 700, 190);
+    c.fillStyle = p.acc; c.fillRect(72, 900, 936, 3);
+    c.fillStyle = p.txt; c.font = "800 44px " + fam; c.fillText("Mercado Bilionário", 72, 972);
+    c.fillStyle = p.sub; c.font = "500 28px 'Instrument Sans', system-ui, sans-serif"; c.fillText("Ofertas Shopee e Mercado Livre · www.createsystemia.com.br", 72, 1022);
+    c.fillStyle = p.acc; rr(c, 740, 928, 268, 62, 31); c.fill(); c.fillStyle = (i % 4 === 2) ? "#ffffff" : p.pill; c.font = "800 30px " + fam; c.textAlign = "center"; c.fillText("Veja a vitrine", 874, 970); c.textAlign = "left";
+  }
+  function fontes() { if (!document.fonts || !document.fonts.load) return Promise.resolve(); return Promise.all([document.fonts.load("800 60px 'Bricolage Grotesque'"), document.fonts.load("500 28px 'Instrument Sans'"), document.fonts.load("500 30px 'JetBrains Mono'")]).catch(function () {}); }
+  function baixarImg(cv, nome) { cv.toBlob(function (b) { if (!b) { avisoP("Não foi possível gerar a imagem."); return; } var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = nome; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000); avisoP("Imagem baixada."); }, "image/png"); }
   var A = el("aba-posts");
   A.style.flexDirection = "column"; A.style.gap = "20px";
   A.innerHTML = '<section class="panel"><h2>Post do dia</h2><p class="note">Textos prontos para divulgar a vitrine. Copie, cole no Instagram, Facebook ou WhatsApp, ou agende no Meta Business Suite.</p>' +
     '<div><label class="l">Canal</label><div class="chips" id="p-canais"></div></div>' +
     '<div class="row"><label class="l" for="p-ini" style="margin:0">Começou a divulgar em</label><input type="date" id="p-ini" style="width:auto"><button class="btn ghost" type="button" id="p-hoje">Começar hoje</button></div>' +
-    '<p style="font:800 2rem var(--font-display);color:var(--blue)" id="p-dia"></p><p class="note" id="p-tema"></p>' +
+    '<p style="font:800 2rem var(--font-display);color:var(--blue)" id="p-dia"></p><p class="note" id="p-tema"></p><canvas id="p-art" aria-label="Imagem do post" style="width:100%;max-width:480px;aspect-ratio:1/1;height:auto;border-radius:12px;border:1px solid var(--line);display:block"></canvas><div class="row"><button class="btn green" type="button" id="p-baixar">Baixar imagem</button></div>' +
     '<pre id="p-texto" style="margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.65;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px"></pre>' +
     '<div class="row"><button class="btn" type="button" id="p-copiar">Copiar texto</button><a class="btn green" id="p-zap" target="_blank" rel="noopener" href="#">Abrir no WhatsApp</a><button class="btn ghost" type="button" id="p-ant">← Dia anterior</button><button class="btn ghost" type="button" id="p-prox">Próximo dia →</button></div><p class="msg" id="p-msg" role="status"></p></section>' +
     '<section class="panel"><h2>Todos os 30 dias</h2><p class="note">Abra um dia para ver o texto. Marque os dias que já publicou ou agendou; a marcação fica salva só neste navegador.</p><div class="list" id="p-lista"></div></section>';
@@ -317,6 +357,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   function mostrarP() {
     el("p-dia").textContent = "Dia " + (dia + 1) + " de " + POSTS.length; el("p-tema").textContent = POSTS[dia][0] + " · " + POSTS[dia][1];
     var t = textoP(dia); el("p-texto").textContent = t; el("p-zap").href = "https://wa.me/?text=" + encodeURIComponent(t); el("p-zap").hidden = cnl !== "whatsapp";
+    var d0 = dia; fontes().then(function () { if (d0 === dia) desenhar(el("p-art"), dia, POSTS[dia]); });
   }
   function listaP() {
     var L = el("p-lista"); L.textContent = "";
@@ -328,9 +369,15 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
       cb.addEventListener("change", function () { feitosP[i] = cb.checked; saveP("mb_feitos", JSON.stringify(feitosP)); });
       var t = document.createElement("span"); t.className = "t"; t.textContent = "Dia " + (i + 1) + " · " + p[0] + " · " + p[1];
       s.appendChild(cb); s.appendChild(t);
+      var cv = document.createElement("canvas"); cv.setAttribute("aria-label", "Imagem do dia " + (i + 1)); cv.style.cssText = "width:100%;max-width:420px;aspect-ratio:1/1;height:auto;border-radius:12px;border:1px solid var(--line);display:block;margin:8px 0";
+      d.addEventListener("toggle", function () { if (d.open && !cv.dataset.ok) { cv.dataset.ok = "1"; fontes().then(function () { desenhar(cv, i, p); }); } });
       var pre = document.createElement("pre"); pre.style.cssText = "margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.6"; pre.textContent = textoP(i);
+      var rw = document.createElement("div"); rw.className = "row";
       var b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = "Copiar texto"; b.addEventListener("click", function () { copiar(textoP(i)); });
-      d.appendChild(s); d.appendChild(pre); d.appendChild(b); L.appendChild(d);
+      var bi = document.createElement("button"); bi.type = "button"; bi.className = "btn green"; bi.textContent = "Baixar imagem";
+      bi.addEventListener("click", function () { fontes().then(function () { desenhar(cv, i, p); cv.dataset.ok = "1"; baixarImg(cv, "mercado-bilionario-dia-" + (i + 1) + ".png"); }); });
+      rw.appendChild(b); rw.appendChild(bi);
+      d.appendChild(s); d.appendChild(cv); d.appendChild(pre); d.appendChild(rw); L.appendChild(d);
     });
   }
   Object.keys(CANAIS).forEach(function (k) {
@@ -342,6 +389,7 @@ label.l { font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; te
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iniP)) iniP = hojeISO(); saveP("mb_inicio", iniP); el("p-ini").value = iniP;
   el("p-ini").addEventListener("change", function () { var v = el("p-ini").value; if (/^\d{4}-\d{2}-\d{2}$/.test(v)) { iniP = v; saveP("mb_inicio", v); dia = diaDeHoje(); mostrarP(); } });
   el("p-hoje").addEventListener("click", function () { iniP = hojeISO(); el("p-ini").value = iniP; saveP("mb_inicio", iniP); dia = 0; mostrarP(); avisoP("Contagem reiniciada: hoje é o dia 1."); });
+  el("p-baixar").addEventListener("click", function () { fontes().then(function () { desenhar(el("p-art"), dia, POSTS[dia]); baixarImg(el("p-art"), "mercado-bilionario-dia-" + (dia + 1) + ".png"); }); });
   el("p-copiar").addEventListener("click", function () { copiar(textoP(dia)); });
   el("p-ant").addEventListener("click", function () { dia = (dia + POSTS.length - 1) % POSTS.length; mostrarP(); });
   el("p-prox").addEventListener("click", function () { dia = (dia + 1) % POSTS.length; mostrarP(); });
